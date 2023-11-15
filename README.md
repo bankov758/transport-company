@@ -1,3 +1,3 @@
 # logistic-company
 # Database
-![Database](project source/src/main/resources/tablica.png "MarineGEO logo")
+![Database](project source/src/main/resources/database.png "MarineGEO logo")
