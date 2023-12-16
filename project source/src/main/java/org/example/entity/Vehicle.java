@@ -2,6 +2,8 @@ package org.example.entity;
 
 import jakarta.persistence.*;
 
+import java.util.Set;
+
 @Entity
 @Table(name = "vehicle")
 public class Vehicle {
@@ -22,6 +24,9 @@ public class Vehicle {
     @ManyToOne(fetch = FetchType.LAZY)
     private Company company;
 
+    @OneToMany(mappedBy = "vehicle", fetch = FetchType.LAZY)
+    private Set<Order> orders;
+
     public Vehicle() {
     }
 
@@ -31,6 +36,11 @@ public class Vehicle {
         this.capacityUnit = capacityUnit;
         this.capacity = capacity;
         this.company = company;
+    }
+
+    public Vehicle(int id, String type, String capacityUnit, float capacity, Company company, Set<Order> orders) {
+        this(id, type, capacityUnit, capacity, company);
+        this.orders = orders;
     }
 
     public int getId() {
@@ -71,5 +81,13 @@ public class Vehicle {
 
     public void setCompany(Company company) {
         this.company = company;
+    }
+
+    public Set<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(Set<Order> orders) {
+        this.orders = orders;
     }
 }
