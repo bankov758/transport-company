@@ -11,7 +11,7 @@ public class Employee extends Person {
     @ManyToOne(fetch = FetchType.LAZY)
     private Company company;
 
-    @ManyToMany(mappedBy = "employees")
+    @ManyToMany(mappedBy = "employees", fetch = FetchType.LAZY)
     private Set<PayloadQualification> payloadQualifications;
 
     public Employee() {

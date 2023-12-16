@@ -23,9 +23,11 @@ public class PayloadQualification {
     public PayloadQualification() {
     }
 
-    public PayloadQualification(int id, String qualification) {
+    public PayloadQualification(int id, String qualification, Set<Payload> payloads, Set<Employee> employees) {
         this.id = id;
         this.qualification = qualification;
+        this.payloads = payloads;
+        this.employees = employees;
     }
 
     public int getId() {
@@ -42,5 +44,21 @@ public class PayloadQualification {
 
     public void setQualification(String qualification) {
         this.qualification = qualification;
+    }
+
+    public Set<Payload> getPayloads() {
+        return payloads;
+    }
+
+    public void setPayloads(Set<Payload> payloads) {
+        this.payloads = payloads;
+    }
+
+    public Set<Employee> getEmployees() {
+        return employees;
+    }
+
+    public void setEmployees(Set<Employee> employees) {
+        this.employees = employees;
     }
 }
