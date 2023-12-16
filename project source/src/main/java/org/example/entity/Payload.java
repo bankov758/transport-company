@@ -2,6 +2,8 @@ package org.example.entity;
 
 import jakarta.persistence.*;
 
+import java.util.Set;
+
 @Entity
 @Table(name = "payload")
 public class Payload {
@@ -19,6 +21,9 @@ public class Payload {
     @ManyToOne(fetch = FetchType.LAZY)
     private PayloadQualification payloadQualification;
 
+    @OneToOne
+    private Order order;
+
     public Payload() {
     }
 
@@ -27,6 +32,11 @@ public class Payload {
         this.unit = unit;
         this.unitValue = unitValue;
         this.payloadQualification = payloadQualification;
+    }
+
+    public Payload(int id, String unit, float unitValue, PayloadQualification payloadQualification, Order order) {
+        this(id, unit, unitValue, payloadQualification);
+        this.order = order;
     }
 
     public int getId() {
@@ -61,4 +71,11 @@ public class Payload {
         this.payloadQualification = payloadQualification;
     }
 
+    public Order getOrder() {
+        return order;
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
+    }
 }

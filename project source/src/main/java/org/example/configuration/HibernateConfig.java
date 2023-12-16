@@ -35,6 +35,7 @@ public class HibernateConfig {
         configuration.addAnnotatedClass(Payload.class);
         configuration.addAnnotatedClass(PayloadQualification.class);
         configuration.addAnnotatedClass(Vehicle.class);
+        configuration.addAnnotatedClass(Order.class);
     }
 
     private static Properties getConfigurationProperties() {

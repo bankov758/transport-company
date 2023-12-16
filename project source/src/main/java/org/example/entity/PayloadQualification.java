@@ -17,7 +17,7 @@ public class PayloadQualification {
     @OneToMany(mappedBy = "payloadQualification", fetch = FetchType.LAZY)
     private Set<Payload> payloads;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     private Set<Employee> employees;
 
     public PayloadQualification() {

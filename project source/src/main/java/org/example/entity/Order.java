@@ -1,4 +1,169 @@
 package org.example.entity;
 
+import jakarta.persistence.*;
+
+import java.time.LocalDateTime;
+import java.util.Set;
+
+@Entity
+@Table(name = "order")
 public class Order {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+
+    @Column(name = "start_time")
+    private LocalDateTime startTime;
+
+    @Column(name = "end_time")
+    private LocalDateTime endTime;
+
+    @Column(name = "departure_point")
+    private String departurePoint;
+
+    @Column(name = "arrival_point")
+    private String arrivalPoint;
+
+    @Column(name = "price")
+    private float price;
+
+    @OneToOne(mappedBy = "order", fetch = FetchType.LAZY)
+    private Payload payload;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Employee driver;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Company company;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Vehicle vehicle;
+
+    @ManyToMany(mappedBy = "orders", fetch = FetchType.LAZY)
+    private Set<Client> clients;
+
+    @OneToOne(mappedBy = "order", fetch = FetchType.LAZY)
+    private Receipt receipt;
+
+    public Order() {
+    }
+
+    public Order(long id, LocalDateTime startTime, LocalDateTime endTime, String departurePoint, String arrivalPoint,
+                 float price, Payload payload, Employee driver, Company company, Vehicle vehicle, Set<Client> clients) {
+        this.id = id;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.departurePoint = departurePoint;
+        this.arrivalPoint = arrivalPoint;
+        this.price = price;
+        this.payload = payload;
+        this.driver = driver;
+        this.company = company;
+        this.vehicle = vehicle;
+        this.clients = clients;
+    }
+
+    public Order(long id, LocalDateTime startTime, LocalDateTime endTime, String departurePoint, String arrivalPoint,
+                 float price, Payload payload, Employee driver, Company company, Vehicle vehicle, Set<Client> clients, Receipt receipt) {
+        this(id, startTime, endTime, departurePoint, arrivalPoint, price, payload, driver, company, vehicle, clients);
+        this.receipt = receipt;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public LocalDateTime getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(LocalDateTime startTime) {
+        this.startTime = startTime;
+    }
+
+    public LocalDateTime getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(LocalDateTime endTime) {
+        this.endTime = endTime;
+    }
+
+    public String getDeparturePoint() {
+        return departurePoint;
+    }
+
+    public void setDeparturePoint(String departurePoint) {
+        this.departurePoint = departurePoint;
+    }
+
+    public String getArrivalPoint() {
+        return arrivalPoint;
+    }
+
+    public void setArrivalPoint(String arrivalPoint) {
+        this.arrivalPoint = arrivalPoint;
+    }
+
+    public float getPrice() {
+        return price;
+    }
+
+    public void setPrice(float price) {
+        this.price = price;
+    }
+
+    public Payload getPayload() {
+        return payload;
+    }
+
+    public void setPayload(Payload payload) {
+        this.payload = payload;
+    }
+
+    public Employee getDriver() {
+        return driver;
+    }
+
+    public void setDriver(Employee driver) {
+        this.driver = driver;
+    }
+
+    public Company getCompany() {
+        return company;
+    }
+
+    public void setCompany(Company company) {
+        this.company = company;
+    }
+
+    public Vehicle getVehicle() {
+        return vehicle;
+    }
+
+    public void setVehicle(Vehicle vehicle) {
+        this.vehicle = vehicle;
+    }
+
+    public Set<Client> getClients() {
+        return clients;
+    }
+
+    public void setClients(Set<Client> clients) {
+        this.clients = clients;
+    }
+
+    public Receipt getReceipt() {
+        return receipt;
+    }
+
+    public void setReceipt(Receipt receipt) {
+        this.receipt = receipt;
+    }
+
 }
