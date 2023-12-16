@@ -13,7 +13,7 @@ dependencies {
     testImplementation(platform("org.junit:junit-bom:5.9.1"))
     testImplementation("org.junit.jupiter:junit-jupiter")
     implementation ("org.hibernate:hibernate-core:6.1.7.Final")
-    implementation ("mysql:mysql-connector-java:8.0.18")
+    implementation ("mysql:mysql-connector-java:8.0.28")
     implementation ("org.apache.logging.log4j:log4j-core:2.12.4")
     implementation("javax.persistence:javax.persistence-api:2.2")
 }
