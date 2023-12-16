@@ -18,13 +18,17 @@ public class Company {
     @OneToMany(mappedBy = "company", fetch = FetchType.LAZY)
     private Set<Employee> employees;
 
+    @OneToMany(mappedBy = "company", fetch = FetchType.LAZY)
+    private Set<Vehicle> vehicles;
+
     public Company() {
     }
 
-    public Company(long id, String name, Set<Employee> employees) {
+    public Company(long id, String name, Set<Employee> employees, Set<Vehicle> vehicles) {
         this.id = id;
         this.name = name;
         this.employees = employees;
+        this.vehicles = vehicles;
     }
 
     public long getId() {
@@ -49,6 +53,14 @@ public class Company {
 
     public void setEmployees(Set<Employee> employees) {
         this.employees = employees;
+    }
+
+    public Set<Vehicle> getVehicles() {
+        return vehicles;
+    }
+
+    public void setVehicles(Set<Vehicle> vehicles) {
+        this.vehicles = vehicles;
     }
 
     @Override
