@@ -1,6 +1,6 @@
 package org.example.entity;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "payload")
@@ -16,7 +16,7 @@ public class Payload {
     @Column(name = "unitValue")
     private float unitValue;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private PayloadQualification payloadQualification;
 
     public Payload() {

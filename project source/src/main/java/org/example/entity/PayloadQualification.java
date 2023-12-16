@@ -1,6 +1,8 @@
 package org.example.entity;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
+
+import java.util.Set;
 
 @Entity
 @Table(name = "payload_qualification")
@@ -11,6 +13,12 @@ public class PayloadQualification {
     private int id;
 
     private String qualification;
+
+    @OneToMany(mappedBy = "payloadQualification", fetch = FetchType.LAZY)
+    private Set<Payload> payloads;
+
+    @ManyToMany
+    private Set<Employee> employees;
 
     public PayloadQualification() {
     }
