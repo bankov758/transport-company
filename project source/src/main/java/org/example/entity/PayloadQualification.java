@@ -2,6 +2,7 @@ package org.example.entity;
 
 import jakarta.persistence.*;
 
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -60,5 +61,27 @@ public class PayloadQualification {
 
     public void setEmployees(Set<Employee> employees) {
         this.employees = employees;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof PayloadQualification that)) return false;
+        return id == that.id && Objects.equals(qualification, that.qualification);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, qualification);
+    }
+
+    @Override
+    public String toString() {
+        return "PayloadQualification{" +
+                "id=" + id +
+                ", qualification='" + qualification + '\'' +
+                ", payloads=" + payloads +
+                ", employees=" + employees +
+                '}';
     }
 }

@@ -3,6 +3,7 @@ package org.example.entity;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -164,5 +165,43 @@ public class Order {
 
     public void setReceipts(Set<Receipt> receipts) {
         this.receipts = receipts;
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Order order = (Order) o;
+        return id == order.id
+                && Float.compare(price, order.price) == 0
+                && Objects.equals(startTime, order.startTime)
+                && Objects.equals(endTime, order.endTime)
+                && Objects.equals(departurePoint, order.departurePoint)
+                && Objects.equals(arrivalPoint, order.arrivalPoint)
+                && Objects.equals(payload, order.payload)
+                && Objects.equals(driver, order.driver)
+                && Objects.equals(company, order.company)
+                && Objects.equals(vehicle, order.vehicle);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, startTime, endTime, departurePoint, arrivalPoint, price, payload, driver, company, vehicle);
+    }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "id=" + id +
+                ", startTime=" + startTime +
+                ", endTime=" + endTime +
+                ", departurePoint='" + departurePoint + '\'' +
+                ", arrivalPoint='" + arrivalPoint + '\'' +
+                ", price=" + price +
+                ", payload=" + payload +
+                ", driver=" + driver +
+                ", company=" + company +
+                '}';
     }
 }

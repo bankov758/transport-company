@@ -2,7 +2,7 @@ package org.example.entity;
 
 import jakarta.persistence.*;
 
-import java.util.Set;
+import java.util.Objects;
 
 @Entity
 @Table(name = "payload")
@@ -77,5 +77,28 @@ public class Payload {
 
     public void setOrder(Order order) {
         this.order = order;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Payload payload)) return false;
+        return id == payload.id && Float.compare(unitValue, payload.unitValue) == 0 && Objects.equals(unit, payload.unit) && Objects.equals(payloadQualification, payload.payloadQualification);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, unit, unitValue, payloadQualification);
+    }
+
+    @Override
+    public String toString() {
+        return "Payload{" +
+                "id=" + id +
+                ", unit='" + unit + '\'' +
+                ", unitValue=" + unitValue +
+                ", payloadQualification=" + payloadQualification +
+                ", order=" + order +
+                '}';
     }
 }

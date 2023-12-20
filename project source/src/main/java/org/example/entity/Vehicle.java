@@ -2,6 +2,7 @@ package org.example.entity;
 
 import jakarta.persistence.*;
 
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -89,5 +90,29 @@ public class Vehicle {
 
     public void setOrders(Set<Order> orders) {
         this.orders = orders;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Vehicle vehicle)) return false;
+        return id == vehicle.id && Float.compare(capacity, vehicle.capacity) == 0 && Objects.equals(type, vehicle.type) && Objects.equals(capacityUnit, vehicle.capacityUnit) && Objects.equals(company, vehicle.company);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, type, capacityUnit, capacity, company);
+    }
+
+    @Override
+    public String toString() {
+        return "Vehicle{" +
+                "id=" + id +
+                ", type='" + type + '\'' +
+                ", capacityUnit='" + capacityUnit + '\'' +
+                ", capacity=" + capacity +
+                ", company=" + company +
+                ", orders=" + orders +
+                '}';
     }
 }
