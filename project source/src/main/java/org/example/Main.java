@@ -15,13 +15,14 @@ public class Main {
         System.out.println("Hello world!");
         Session session = HibernateConfig.getSessionFactory().openSession();
         try (session){
-            //Company company = new Company(1, "Sasdasdas", new HashSet<>());
-            //Employee employee = new Employee(1, "ivo", "bankov", company);
-
-            //CompanyDao.createCompany(company);
-            //EmployeeDao.createEmployee(employee);
-
-            //System.out.println(EmployeeDao.getEmployeeById(1));
+            Company company = new Company(1, "Sasdasdas");
+            CompanyDao companyDao = new CompanyDao(Company.class);
+            //companyDao.create(company);
+            companyDao.delete(company);
+            System.out.println(companyDao.getAll());
+            //company.setName("aaaa");
+            //companyDao.update(company);
+            //System.out.println(companyDao.getById(1));
         }
     }
 }
