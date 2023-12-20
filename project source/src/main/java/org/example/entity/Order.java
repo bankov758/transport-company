@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 import java.util.Set;
 
 @Entity
-@Table(name = "order")
+@Table(name = "transport_order")
 public class Order {
 
     @Id
@@ -43,8 +43,8 @@ public class Order {
     @ManyToMany(mappedBy = "orders", fetch = FetchType.LAZY)
     private Set<Client> clients;
 
-    @OneToOne(mappedBy = "order", fetch = FetchType.LAZY)
-    private Receipt receipt;
+    @OneToMany(mappedBy = "order", fetch = FetchType.LAZY)
+    private Set<Receipt> receipts;
 
     public Order() {
     }
@@ -65,9 +65,9 @@ public class Order {
     }
 
     public Order(long id, LocalDateTime startTime, LocalDateTime endTime, String departurePoint, String arrivalPoint,
-                 float price, Payload payload, Employee driver, Company company, Vehicle vehicle, Set<Client> clients, Receipt receipt) {
+                 float price, Payload payload, Employee driver, Company company, Vehicle vehicle, Set<Client> clients, Set<Receipt> receipts) {
         this(id, startTime, endTime, departurePoint, arrivalPoint, price, payload, driver, company, vehicle, clients);
-        this.receipt = receipt;
+        this.receipts = receipts;
     }
 
     public long getId() {
@@ -158,12 +158,11 @@ public class Order {
         this.clients = clients;
     }
 
-    public Receipt getReceipt() {
-        return receipt;
+    public Set<Receipt> getReceipts() {
+        return receipts;
     }
 
-    public void setReceipt(Receipt receipt) {
-        this.receipt = receipt;
+    public void setReceipts(Set<Receipt> receipts) {
+        this.receipts = receipts;
     }
-
 }
