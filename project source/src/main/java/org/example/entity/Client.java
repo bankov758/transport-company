@@ -17,12 +17,12 @@ public class Client extends Person {
     public Client() {
     }
 
-    public Client(int id, String firstName, String lastName) {
-        super(id, firstName, lastName);
+    public Client(int id, String firstName, String lastName, String ssn) {
+        super(id, firstName, lastName, ssn);
     }
 
-    public Client(int id, String firstName, String lastName, Set<Order> orders, Set<Receipt> receipts) {
-        this(id, firstName, lastName);
+    public Client(int id, String firstName, String lastName, Set<Order> orders, Set<Receipt> receipts, String ssn) {
+        this(id, firstName, lastName, ssn);
         this.orders = orders;
         this.receipts = receipts;
     }

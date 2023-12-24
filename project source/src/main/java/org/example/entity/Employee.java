@@ -20,13 +20,14 @@ public class Employee extends Person {
     public Employee() {
     }
 
-    public Employee(int id, String firstName, String lastName, Company company) {
-        super(id, firstName, lastName);
+    public Employee(int id, String firstName, String lastName, String ssn, Company company) {
+        super(id, firstName, lastName, ssn);
         this.company = company;
     }
 
-    public Employee(int id, String firstName, String lastName, Company company, Set<PayloadQualification> payloadQualifications, Set<Order> orders) {
-        this(id, firstName, lastName, company);
+    public Employee(int id, String firstName, String lastName, String ssn, Company company,
+                    Set<PayloadQualification> payloadQualifications, Set<Order> orders) {
+        this(id, firstName, lastName, ssn, company);
         this.payloadQualifications = payloadQualifications;
         this.orders = orders;
     }
