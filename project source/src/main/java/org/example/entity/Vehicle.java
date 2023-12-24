@@ -16,8 +16,9 @@ public class Vehicle {
     @Column(name = "type")
     private String type;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "capacity_unit")
-    private String capacityUnit;
+    private CapacityUnit capacityUnit;
 
     @Column(name = "capacity")
     private float capacity;
@@ -31,7 +32,7 @@ public class Vehicle {
     public Vehicle() {
     }
 
-    public Vehicle(int id, String type, String capacityUnit, float capacity, Company company) {
+    public Vehicle(int id, String type, CapacityUnit capacityUnit, float capacity, Company company) {
         this.id = id;
         this.type = type;
         this.capacityUnit = capacityUnit;
@@ -39,7 +40,7 @@ public class Vehicle {
         this.company = company;
     }
 
-    public Vehicle(int id, String type, String capacityUnit, float capacity, Company company, Set<Order> orders) {
+    public Vehicle(int id, String type, CapacityUnit capacityUnit, float capacity, Company company, Set<Order> orders) {
         this(id, type, capacityUnit, capacity, company);
         this.orders = orders;
     }
@@ -60,11 +61,11 @@ public class Vehicle {
         this.type = type;
     }
 
-    public String getCapacityUnit() {
+    public CapacityUnit getCapacityUnit() {
         return capacityUnit;
     }
 
-    public void setCapacityUnit(String capacityUnit) {
+    public void setCapacityUnit(CapacityUnit capacityUnit) {
         this.capacityUnit = capacityUnit;
     }
 

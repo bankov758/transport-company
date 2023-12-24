@@ -15,7 +15,7 @@ public class Main {
         System.out.println("Hello world!");
         Session session = HibernateConfig.getSessionFactory().openSession();
         try (session){
-            Company company = new Company(1, "Sasdasdas");
+            Company company = new Company(1, "DHL");
             CompanyDao companyDao = new CompanyDao(Company.class);
             //companyDao.create(company);
             companyDao.delete(company);
