@@ -1,14 +1,11 @@
 package org.example.dao;
 
 
-import jakarta.persistence.criteria.CriteriaBuilder;
-import jakarta.persistence.criteria.CriteriaQuery;
-import jakarta.persistence.criteria.Root;
 import org.example.configuration.HibernateConfig;
+import org.example.dto.EmployeeDto;
 import org.example.entity.Company;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import org.hibernate.query.Query;
 
 import java.util.List;
 
@@ -18,20 +15,37 @@ public class CompanyDao extends AbstractDao<Company> {
         super(clazz);
     }
 
-    public static List<Company> getCompaniesByName(String name, boolean enableLike) {
-        try (Session session = HibernateConfig.getSessionFactory().openSession()) {
-            CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
-            CriteriaQuery<Company> criteriaQuery = criteriaBuilder.createQuery(Company.class);
-            Root<Company> root = criteriaQuery.from(Company.class);
-            if (enableLike) {
-                criteriaQuery.select(root).where(criteriaBuilder.like(root.get("name"), "%" + name + "%"));
-            } else {
-                criteriaQuery.select(root).where(criteriaBuilder.equal(root.get("name"), name));
-            }
-            Query<Company> query = session.createQuery(criteriaQuery);
-            List<Company> companies = query.getResultList();
-            return companies;
+    public List<EmployeeDto> getCompanyEmployeesDTO(String companyName) {
+        List<EmployeeDto> employees;
+        try (Session session =  HibernateConfig.getSessionFactory().openSession()) {
+            Transaction transaction = session.beginTransaction();
+            employees = session.createQuery(
+                            "select new org.example.dto.EmployeeDto(e.id, e.firstName, e.lastName)" +
+                                    " from Employee e" +
+                                    " join e.company c " +
+                                    "where c.name = :companyName",
+                            EmployeeDto.class)
+                    .setParameter("companyName", companyName)
+                    .getResultList();
+            transaction.commit();
         }
+        return employees;
+    }
+
+    public List<EmployeeDto> getCompanyVehiclesDTO(String companyName) {
+        List<EmployeeDto> employees;
+        try (Session session =  HibernateConfig.getSessionFactory().openSession()) {
+            Transaction transaction = session.beginTransaction();
+            employees = session.createQuery(
+                            "select new org.example.dto.VehicleDto(v.id, v.type, v.registrationNumber, c.name) from Vehicle v" +
+                                    " join v.company c " +
+                                    "where c.name = :companyName",
+                            EmployeeDto.class)
+                    .setParameter("companyName", companyName)
+                    .getResultList();
+            transaction.commit();
+        }
+        return employees;
     }
 
 }

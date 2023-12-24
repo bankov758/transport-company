@@ -13,7 +13,7 @@ import java.util.Objects;
 public class Person {
 
     private static final int MIN_NAME_LENGTH = 3;
-    private static final int MAX_NAME_LENGTH = 3;
+    private static final int MAX_NAME_LENGTH = 20;
     private static final int SSN_LENGTH = 10;
 
     @Id

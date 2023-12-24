@@ -3,28 +3,38 @@ package org.example;
 import org.example.configuration.HibernateConfig;
 import org.example.dao.CompanyDao;
 import org.example.dao.EmployeeDao;
+import org.example.dao.VehicleDao;
+import org.example.dto.CompanyDto;
+import org.example.dto.CreateEmployeeDto;
+import org.example.dto.CreateVehicleDto;
 import org.example.entity.Company;
 import org.example.entity.Employee;
+import org.example.entity.Vehicle;
+import org.example.enums.CapacityUnit;
+import org.example.utils.CompanyMapper;
+import org.example.utils.EmployeeMapper;
+import org.example.utils.VehicleMapper;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-
-import java.util.HashSet;
 
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Hello world!");
         Session session = HibernateConfig.getSessionFactory().openSession();
         try (session){
-            Company company = new Company();
-            company.setName("DHL");
-
             CompanyDao companyDao = new CompanyDao(Company.class);
-            companyDao.create(company);
-            //companyDao.delete(company);
-            System.out.println(companyDao.getAll());
-            //company.setName("aaaa");
-            //companyDao.update(company);
-            //System.out.println(companyDao.getById(1));
+            EmployeeDao employeeDao = new EmployeeDao(Employee.class);
+            VehicleDao vehicleDao = new VehicleDao(Vehicle.class);
+
+            vehicleDao.create(VehicleMapper.createDtoToObject(
+                    new CreateVehicleDto("truck", CapacityUnit.KILOGRAM,
+                            1000, "ov0112da",
+                            companyDao.getByField("name", "DHL"))));
+
+            vehicleDao.create(VehicleMapper.createDtoToObject(
+                    new CreateVehicleDto("semi-truck", CapacityUnit.KILOGRAM,
+                            500, "ov0113da",
+                            companyDao.getByField("name", "DHL"))));
+
+            System.out.println(companyDao.getCompanyVehiclesDTO("DHL"));
         }
     }
 }
