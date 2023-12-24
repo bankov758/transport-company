@@ -5,7 +5,8 @@ import jakarta.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Table(name = "person")
+@Table(name = "person",
+       uniqueConstraints = @UniqueConstraint(columnNames = {"first_name", "last_name", "ssn"}))
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Person {
 
@@ -19,13 +20,17 @@ public class Person {
     @Column(name = "last_name")
     protected String lastName;
 
+    @Column(name = "ssn")
+    protected String ssn;
+
     public Person() {
     }
 
-    public Person(int id, String firstName, String lastName) {
+    public Person(int id, String firstName, String lastName, String ssn) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.ssn = ssn;
     }
 
     public int getId() {
@@ -52,16 +57,26 @@ public class Person {
         this.lastName = lastName;
     }
 
+    public String getSsn() {
+        return ssn;
+    }
+
+    public void setSsn(String ssn) {
+        this.ssn = ssn;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Person person)) return false;
-        return id == person.id && Objects.equals(firstName, person.firstName) && Objects.equals(lastName, person.lastName);
+        return Objects.equals(firstName, person.firstName)
+                && Objects.equals(lastName, person.lastName)
+                && Objects.equals(ssn, person.ssn);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstName, lastName);
+        return Objects.hash(firstName, lastName, ssn);
     }
 
     @Override
@@ -70,7 +85,7 @@ public class Person {
                 "id=" + id +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
+                ", ssn='" + ssn + '\'' +
                 '}';
     }
-
 }

@@ -15,10 +15,12 @@ public class Main {
         System.out.println("Hello world!");
         Session session = HibernateConfig.getSessionFactory().openSession();
         try (session){
-            Company company = new Company(1, "DHL");
+            Company company = new Company();
+            company.setName("DHL");
+
             CompanyDao companyDao = new CompanyDao(Company.class);
-            //companyDao.create(company);
-            companyDao.delete(company);
+            companyDao.create(company);
+            //companyDao.delete(company);
             System.out.println(companyDao.getAll());
             //company.setName("aaaa");
             //companyDao.update(company);

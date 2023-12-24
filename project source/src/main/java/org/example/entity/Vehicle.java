@@ -6,7 +6,8 @@ import java.util.Objects;
 import java.util.Set;
 
 @Entity
-@Table(name = "vehicle")
+@Table(name = "vehicle",
+        uniqueConstraints = @UniqueConstraint(columnNames = {"registration_number"}))
 public class Vehicle {
 
     @Id
@@ -23,6 +24,9 @@ public class Vehicle {
     @Column(name = "capacity")
     private float capacity;
 
+    @Column(name = "registration_number")
+    private String registrationNumber;
+
     @ManyToOne(fetch = FetchType.LAZY)
     private Company company;
 
@@ -32,16 +36,19 @@ public class Vehicle {
     public Vehicle() {
     }
 
-    public Vehicle(int id, String type, CapacityUnit capacityUnit, float capacity, Company company) {
+    public Vehicle(int id, String type, CapacityUnit capacityUnit,
+                   float capacity, String registrationNumber, Company company) {
         this.id = id;
         this.type = type;
         this.capacityUnit = capacityUnit;
         this.capacity = capacity;
+        this.registrationNumber = registrationNumber;
         this.company = company;
     }
 
-    public Vehicle(int id, String type, CapacityUnit capacityUnit, float capacity, Company company, Set<Order> orders) {
-        this(id, type, capacityUnit, capacity, company);
+    public Vehicle(int id, String type, CapacityUnit capacityUnit, float capacity,
+                   Company company, String registrationNumber, Set<Order> orders) {
+        this(id, type, capacityUnit, capacity, registrationNumber, company);
         this.orders = orders;
     }
 
@@ -77,6 +84,14 @@ public class Vehicle {
         this.capacity = capacity;
     }
 
+    public String getRegistrationNumber() {
+        return registrationNumber;
+    }
+
+    public void setRegistrationNumber(String registrationNumber) {
+        this.registrationNumber = registrationNumber;
+    }
+
     public Company getCompany() {
         return company;
     }
@@ -97,12 +112,16 @@ public class Vehicle {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Vehicle vehicle)) return false;
-        return id == vehicle.id && Float.compare(capacity, vehicle.capacity) == 0 && Objects.equals(type, vehicle.type) && Objects.equals(capacityUnit, vehicle.capacityUnit) && Objects.equals(company, vehicle.company);
+        return Float.compare(capacity, vehicle.capacity) == 0
+                && Objects.equals(type, vehicle.type)
+                && capacityUnit == vehicle.capacityUnit
+                && Objects.equals(registrationNumber, vehicle.registrationNumber)
+                && Objects.equals(company, vehicle.company);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, type, capacityUnit, capacity, company);
+        return Objects.hash(type, capacityUnit, capacity, registrationNumber, company);
     }
 
     @Override
@@ -110,10 +129,10 @@ public class Vehicle {
         return "Vehicle{" +
                 "id=" + id +
                 ", type='" + type + '\'' +
-                ", capacityUnit='" + capacityUnit + '\'' +
+                ", capacityUnit=" + capacityUnit +
                 ", capacity=" + capacity +
+                ", registrationNumber='" + registrationNumber + '\'' +
                 ", company=" + company +
-                ", orders=" + orders +
                 '}';
     }
 }

@@ -6,13 +6,15 @@ import java.util.Objects;
 import java.util.Set;
 
 @Entity
-@Table(name = "payload_qualification")
+@Table(name = "payload_qualification",
+        uniqueConstraints = @UniqueConstraint(columnNames = {"qualification"}))
 public class PayloadQualification {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @Column(name = "qualification")
     private String qualification;
 
     @OneToMany(mappedBy = "payloadQualification", fetch = FetchType.LAZY)

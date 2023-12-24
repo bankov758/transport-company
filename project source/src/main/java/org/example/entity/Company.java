@@ -7,7 +7,8 @@ import java.util.Objects;
 import java.util.Set;
 
 @Entity
-@Table(name = "company")
+@Table(name = "company",
+       uniqueConstraints = @UniqueConstraint(columnNames = {"name"}))
 public class Company {
 
     @Id
