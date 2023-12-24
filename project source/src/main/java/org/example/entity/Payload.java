@@ -1,6 +1,8 @@
 package org.example.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Positive;
+import org.example.enums.CapacityUnit;
 
 import java.util.Objects;
 
@@ -12,16 +14,17 @@ public class Payload {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "unit")
+    @Column(name = "unit", nullable = false)
     private CapacityUnit unit;
 
-    @Column(name = "unitValue")
+    @Column(name = "unitValue", nullable = false)
+    @Positive(message = "Payload's unit value should be a positive number!")
     private float unitValue;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     private PayloadQualification payloadQualification;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     private Order order;
 
     public Payload() {

@@ -1,6 +1,9 @@
 package org.example.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
+import org.example.enums.CapacityUnit;
 
 import java.util.Objects;
 import java.util.Set;
@@ -9,6 +12,8 @@ import java.util.Set;
 @Table(name = "vehicle",
         uniqueConstraints = @UniqueConstraint(columnNames = {"registration_number"}))
 public class Vehicle {
+
+    private static final int REG_NUM_LENGTH = 8;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,9 +30,15 @@ public class Vehicle {
     private float capacity;
 
     @Column(name = "registration_number")
+    @Size(
+            min = REG_NUM_LENGTH,
+            max = REG_NUM_LENGTH,
+            message = "A vehicle's registration number has to be " + REG_NUM_LENGTH + " characters!"
+    )
+    @Pattern(regexp = "^[A-Za-z]{2}\\d{4}[A-Za-z]{2}$", message = "Vehicle's registration number does not match the pattern!")
     private String registrationNumber;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     private Company company;
 
     @OneToMany(mappedBy = "vehicle", fetch = FetchType.LAZY)

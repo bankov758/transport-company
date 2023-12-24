@@ -2,6 +2,7 @@ package org.example.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 import java.util.Objects;
 import java.util.Set;
@@ -11,12 +12,19 @@ import java.util.Set;
        uniqueConstraints = @UniqueConstraint(columnNames = {"name"}))
 public class Company {
 
+    private static final int MIN_NAME_LENGTH = 3;
+    private static final int MAX_NAME_LENGTH = 30;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name = "name")
-    @NotBlank(message = "Company name cannot be blank!")
+    @Column(name = "name", nullable = false)
+    @Size(
+            min = MIN_NAME_LENGTH,
+            max = MAX_NAME_LENGTH,
+            message = "Company name has to be between " + MIN_NAME_LENGTH + " and " + MAX_NAME_LENGTH + " characters!"
+    )
     private String name;
 
     @OneToMany(mappedBy = "company", fetch = FetchType.LAZY)

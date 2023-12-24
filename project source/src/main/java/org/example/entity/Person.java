@@ -1,6 +1,8 @@
 package org.example.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 
 import java.util.Objects;
 
@@ -10,18 +12,38 @@ import java.util.Objects;
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Person {
 
+    private static final int MIN_NAME_LENGTH = 3;
+    private static final int MAX_NAME_LENGTH = 3;
+    private static final int SSN_LENGTH = 10;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    protected int id;
+    private int id;
 
     @Column(name = "first_name")
-    protected String firstName;
+    @Size(
+            min = MIN_NAME_LENGTH,
+            max = MAX_NAME_LENGTH,
+            message = "A person's fist name has to be between " + MIN_NAME_LENGTH + " and " + MAX_NAME_LENGTH + " characters!"
+    )
+    private String firstName;
 
     @Column(name = "last_name")
-    protected String lastName;
+    @Size(
+            min = MIN_NAME_LENGTH,
+            max = MAX_NAME_LENGTH,
+            message = "A person's last name has to be between " + MIN_NAME_LENGTH + " and " + MAX_NAME_LENGTH + " characters!"
+    )
+    private String lastName;
 
     @Column(name = "ssn")
-    protected String ssn;
+    @Size(
+            min = SSN_LENGTH,
+            max = SSN_LENGTH,
+            message = "A person's social security number has to be " + SSN_LENGTH + " characters!"
+    )
+    @Pattern(regexp = "^\\d+$", message = "A person's social security number has to contain only digits!")
+    private String ssn;
 
     public Person() {
     }

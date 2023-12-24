@@ -13,10 +13,10 @@ public class Receipt {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     private Client client;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     private Order order;
 
     public Receipt() {

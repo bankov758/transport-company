@@ -1,6 +1,7 @@
 package org.example.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
 
 import java.util.Objects;
 import java.util.Set;
@@ -10,11 +11,19 @@ import java.util.Set;
         uniqueConstraints = @UniqueConstraint(columnNames = {"qualification"}))
 public class PayloadQualification {
 
+    private static final int MIN_QLF_LENGTH = 3;
+    private static final int MAX_QLF_LENGTH = 20;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "qualification")
+    @Column(name = "qualification", nullable = false)
+    @Size(
+            min = MIN_QLF_LENGTH,
+            max = MAX_QLF_LENGTH,
+            message = "A qualification has to be between " + MIN_QLF_LENGTH + " and " + MAX_QLF_LENGTH + " characters!"
+    )
     private String qualification;
 
     @OneToMany(mappedBy = "payloadQualification", fetch = FetchType.LAZY)

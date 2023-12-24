@@ -14,31 +14,31 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name = "start_time")
+    @Column(name = "start_time", nullable = false)
     private LocalDateTime startTime;
 
-    @Column(name = "end_time")
+    @Column(name = "end_time", nullable = false)
     private LocalDateTime endTime;
 
-    @Column(name = "departure_point")
+    @Column(name = "departure_point", nullable = false)
     private String departurePoint;
 
-    @Column(name = "arrival_point")
+    @Column(name = "arrival_point", nullable = false)
     private String arrivalPoint;
 
-    @Column(name = "price")
+    @Column(name = "price", nullable = false)
     private float price;
 
-    @OneToOne(mappedBy = "order", fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "order", fetch = FetchType.LAZY, optional = false)
     private Payload payload;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     private Employee driver;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     private Company company;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     private Vehicle vehicle;
 
     @ManyToMany(mappedBy = "orders", fetch = FetchType.LAZY)
