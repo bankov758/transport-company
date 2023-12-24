@@ -1,6 +1,7 @@
 package org.example.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 
 import java.util.Objects;
 import java.util.Set;
@@ -14,6 +15,7 @@ public class Company {
     private long id;
 
     @Column(name = "name")
+    @NotBlank(message = "Company name cannot be blank!")
     private String name;
 
     @OneToMany(mappedBy = "company", fetch = FetchType.LAZY)

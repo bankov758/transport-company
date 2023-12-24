@@ -15,6 +15,8 @@ dependencies {
     implementation ("org.hibernate:hibernate-core:6.1.7.Final")
     implementation ("mysql:mysql-connector-java:8.0.18")
     implementation ("org.apache.logging.log4j:log4j-core:2.12.4")
+    implementation("org.hibernate.validator:hibernate-validator:8.0.1.Final")
+    implementation("org.hibernate.validator:hibernate-validator-annotation-processor:8.0.1.Final")
 }
 
 tasks.test {

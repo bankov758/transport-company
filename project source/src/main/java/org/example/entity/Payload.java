@@ -1,6 +1,7 @@
 package org.example.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 
 import java.util.Objects;
 
@@ -13,7 +14,7 @@ public class Payload {
     private int id;
 
     @Column(name = "unit")
-    private String unit;
+    private CapacityUnit unit;
 
     @Column(name = "unitValue")
     private float unitValue;
@@ -27,14 +28,14 @@ public class Payload {
     public Payload() {
     }
 
-    public Payload(int id, String unit, float unitValue, PayloadQualification payloadQualification) {
+    public Payload(int id, CapacityUnit unit, float unitValue, PayloadQualification payloadQualification) {
         this.id = id;
         this.unit = unit;
         this.unitValue = unitValue;
         this.payloadQualification = payloadQualification;
     }
 
-    public Payload(int id, String unit, float unitValue, PayloadQualification payloadQualification, Order order) {
+    public Payload(int id, CapacityUnit unit, float unitValue, PayloadQualification payloadQualification, Order order) {
         this(id, unit, unitValue, payloadQualification);
         this.order = order;
     }
@@ -47,11 +48,11 @@ public class Payload {
         this.id = id;
     }
 
-    public String getUnit() {
+    public CapacityUnit getUnit() {
         return unit;
     }
 
-    public void setUnit(String unit) {
+    public void setUnit(CapacityUnit unit) {
         this.unit = unit;
     }
 
