@@ -8,7 +8,7 @@ import java.util.Set;
 @Table(name = "employee")
 public class Employee extends Person {
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     private Company company;
 
     @ManyToMany(mappedBy = "employees", fetch = FetchType.LAZY)
@@ -54,5 +54,13 @@ public class Employee extends Person {
 
     public void setOrders(Set<Order> orders) {
         this.orders = orders;
+    }
+
+    @Override
+    public String toString() {
+        return "Employee{" +
+                super.toString() +
+                ", company=" + company.getName() +
+                '}';
     }
 }

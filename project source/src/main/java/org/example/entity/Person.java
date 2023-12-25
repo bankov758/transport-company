@@ -7,8 +7,7 @@ import jakarta.validation.constraints.Size;
 import java.util.Objects;
 
 @Entity
-@Table(name = "person",
-       uniqueConstraints = @UniqueConstraint(columnNames = {"first_name", "last_name", "ssn"}))
+@Table(name = "person")
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Person {
 
@@ -103,11 +102,9 @@ public class Person {
 
     @Override
     public String toString() {
-        return "Person{" +
-                "id=" + id +
+        return "id=" + id +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
-                ", ssn='" + ssn + '\'' +
-                '}';
+                ", ssn='" + ssn + '\'';
     }
 }

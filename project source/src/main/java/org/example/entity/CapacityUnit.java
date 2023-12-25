@@ -1,4 +1,4 @@
-package org.example.enums;
+package org.example.entity;
 
 public enum CapacityUnit {
     LITER, KILOGRAM, POUND, PERSON

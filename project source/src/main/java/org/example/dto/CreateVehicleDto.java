@@ -1,7 +1,7 @@
 package org.example.dto;
 
 import org.example.entity.Company;
-import org.example.enums.CapacityUnit;
+import org.example.entity.CapacityUnit;
 
 public class CreateVehicleDto {
 

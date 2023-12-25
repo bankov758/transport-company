@@ -43,4 +43,10 @@ public class Client extends Person {
         this.receipts = receipts;
     }
 
+    @Override
+    public String toString() {
+        return "Client{" +
+                super.toString() +
+                '}';
+    }
 }

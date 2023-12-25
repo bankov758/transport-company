@@ -1,4 +1,4 @@
-package org.example.utils;
+package org.example.util;
 
 import org.example.dto.CreateVehicleDto;
 import org.example.entity.Vehicle;

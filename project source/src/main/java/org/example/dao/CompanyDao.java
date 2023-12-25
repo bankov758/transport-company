@@ -3,6 +3,7 @@ package org.example.dao;
 
 import org.example.configuration.HibernateConfig;
 import org.example.dto.EmployeeDto;
+import org.example.dto.VehicleDto;
 import org.example.entity.Company;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -32,20 +33,20 @@ public class CompanyDao extends AbstractDao<Company> {
         return employees;
     }
 
-    public List<EmployeeDto> getCompanyVehiclesDTO(String companyName) {
-        List<EmployeeDto> employees;
+    public List<VehicleDto> getCompanyVehiclesDTO(String companyName) {
+        List<VehicleDto> vehicles;
         try (Session session =  HibernateConfig.getSessionFactory().openSession()) {
             Transaction transaction = session.beginTransaction();
-            employees = session.createQuery(
+            vehicles = session.createQuery(
                             "select new org.example.dto.VehicleDto(v.id, v.type, v.registrationNumber, c.name) from Vehicle v" +
                                     " join v.company c " +
                                     "where c.name = :companyName",
-                            EmployeeDto.class)
+                            VehicleDto.class)
                     .setParameter("companyName", companyName)
                     .getResultList();
             transaction.commit();
         }
-        return employees;
+        return vehicles;
     }
 
 }
