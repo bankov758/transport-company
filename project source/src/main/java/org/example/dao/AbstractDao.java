@@ -2,6 +2,7 @@ package org.example.dao;
 
 import jakarta.persistence.EntityNotFoundException;
 import org.example.configuration.HibernateConfig;
+import org.example.dao.contracts.CrudDao;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -9,7 +10,7 @@ import java.util.List;
 
 import static java.lang.String.format;
 
-public abstract class AbstractDao<T> {
+public abstract class AbstractDao<T> implements CrudDao<T> {
 
     private final Class<T> clazz;
 

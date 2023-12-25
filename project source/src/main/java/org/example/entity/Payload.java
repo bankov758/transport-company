@@ -13,6 +13,7 @@ public class Payload {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "unit", nullable = false)
     private CapacityUnit unit;
 
@@ -99,8 +100,6 @@ public class Payload {
                 "id=" + id +
                 ", unit='" + unit + '\'' +
                 ", unitValue=" + unitValue +
-                ", payloadQualification=" + payloadQualification +
-                ", order=" + order +
                 '}';
     }
 }

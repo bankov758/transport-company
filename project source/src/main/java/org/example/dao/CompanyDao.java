@@ -2,6 +2,7 @@ package org.example.dao;
 
 
 import org.example.configuration.HibernateConfig;
+import org.example.dao.contracts.CrudDao;
 import org.example.dto.EmployeeDto;
 import org.example.dto.VehicleDto;
 import org.example.entity.Company;

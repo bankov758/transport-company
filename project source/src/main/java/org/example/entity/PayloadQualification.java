@@ -90,9 +90,7 @@ public class PayloadQualification {
     public String toString() {
         return "PayloadQualification{" +
                 "id=" + id +
-                ", qualification='" + qualification + '\'' +
-                ", payloads=" + payloads +
-                ", employees=" + employees +
+                ", qualification='" + qualification +
                 '}';
     }
 }

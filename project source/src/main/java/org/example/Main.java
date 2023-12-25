@@ -1,17 +1,11 @@
 package org.example;
 
 import org.example.configuration.HibernateConfig;
-import org.example.dao.ClientDao;
-import org.example.dao.CompanyDao;
-import org.example.dao.EmployeeDao;
-import org.example.dao.VehicleDao;
-import org.example.dto.CreateClientDto;
-import org.example.dto.CreateEmployeeDto;
-import org.example.entity.Client;
-import org.example.entity.Company;
-import org.example.entity.Employee;
-import org.example.entity.Vehicle;
-import org.example.util.PersonMapper;
+import org.example.dao.*;
+import org.example.dto.CreatePayloadDto;
+import org.example.dto.CreatePayloadQualificationDto;
+import org.example.entity.*;
+import org.example.util.PayloadMapper;
 import org.hibernate.Session;
 
 public class Main {
@@ -22,6 +16,8 @@ public class Main {
             EmployeeDao employeeDao = new EmployeeDao(Employee.class);
             VehicleDao vehicleDao = new VehicleDao(Vehicle.class);
             ClientDao clientDao = new ClientDao(Client.class);
+            PayloadQualificationDao payloadQualificationDao = new PayloadQualificationDao(PayloadQualification.class);
+            PayloadDao payloadDao = new PayloadDao(Payload.class);
 
 
             //companyDao.create(CompanyMapper.dtoToObject(new CompanyDto("DHL")));
@@ -38,18 +34,26 @@ public class Main {
 
 //            System.out.println(companyDao.getCompanyVehiclesDTO("DHL"));
 
-            employeeDao.create(PersonMapper.createDtoToObject(new CreateEmployeeDto(
-                    "Ivo",
-                    "bankov",
-                    "0141164465",
-                    companyDao.getByField("name", "DHL")
-            )));
+//            employeeDao.create(PersonMapper.createDtoToObject(new CreateEmployeeDto(
+//                    "Ivo",
+//                    "bankov",
+//                    "0141164465",
+//                    companyDao.getByField("name", "DHL")
+//            )));
 
 //            clientDao.create(PersonMapper.createDtoToObject(new CreateClientDto(
 //                    "pesho",
 //                    "bankov",
 //                    "1141164465")));
-            System.out.println(employeeDao.getAll());
+
+            payloadQualificationDao.create(PayloadMapper.dtoToObject(new CreatePayloadQualificationDto("Flammable goods")));
+            payloadDao.create(PayloadMapper.dtoToObject(new CreatePayloadDto(
+                    CapacityUnit.KILOGRAM,
+                    100,
+                    payloadQualificationDao.getByField("qualification", "Flammable goods"))));
+
+            System.out.println(payloadQualificationDao.getAll());
+            System.out.println(payloadDao.getAll());
         }
     }
 }
