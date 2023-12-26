@@ -8,7 +8,7 @@ import java.util.Set;
 @Table(name = "client")
 public class Client extends Person {
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "clients", fetch = FetchType.LAZY)
     private Set<Order> orders;
 
     @OneToMany(mappedBy = "client", fetch = FetchType.LAZY)

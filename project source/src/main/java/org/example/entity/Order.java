@@ -41,7 +41,7 @@ public class Order {
     @ManyToOne(fetch = FetchType.LAZY)
     private Vehicle vehicle;
 
-    @ManyToMany(mappedBy = "orders", fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY)
     private Set<Client> clients;
 
     @OneToMany(mappedBy = "order", fetch = FetchType.LAZY)

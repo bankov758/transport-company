@@ -5,6 +5,7 @@ import org.example.dao.*;
 import org.example.dto.*;
 import org.example.entity.*;
 import org.example.service.EmployeeService;
+import org.example.service.OrderService;
 import org.example.util.*;
 import org.hibernate.Session;
 
@@ -50,6 +51,8 @@ public class Main {
         ));
         order.setVehicle(vehicleDao.getSuitableForOrder(order));
         orderDao.create(order);
+        OrderService orderService = new OrderService();
+        orderService.addClient(order, 1);
     }
 
     private static void createPayloads(PayloadQualificationDao payloadQualificationDao, PayloadDao payloadDao) {
