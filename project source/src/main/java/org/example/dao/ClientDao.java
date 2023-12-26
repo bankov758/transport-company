@@ -7,8 +7,8 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 public class ClientDao extends AbstractDao<Client>{
-    public ClientDao(Class<Client> clazz) {
-        super(clazz);
+    public ClientDao() {
+        super(Client.class);
     }
 
     @Override
@@ -29,7 +29,7 @@ public class ClientDao extends AbstractDao<Client>{
                     .setParameter("firstName", entity.getFirstName())
                     .setParameter("lastName", entity.getLastName())
                     .setParameter("ssn", entity.getSsn())
-                    .getSingleResult();
+                    .getSingleResultOrNull();
             transaction.commit();
             if (client != null) {
                 throw new DuplicateEntityException(

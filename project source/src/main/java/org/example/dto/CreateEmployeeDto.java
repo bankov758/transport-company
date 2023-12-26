@@ -15,8 +15,4 @@ public class CreateEmployeeDto extends CreatePersonDto {
         return company;
     }
 
-    public void setCompany(Company company) {
-        this.company = company;
-    }
-
 }

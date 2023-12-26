@@ -1,8 +1,11 @@
 package org.example.dto;
 
 public class PersonDto {
+
     private long id;
+
     private String firstName;
+
     private String lastName;
 
     public PersonDto(long id, String firstName, String lastName) {

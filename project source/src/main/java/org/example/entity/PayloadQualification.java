@@ -29,7 +29,7 @@ public class PayloadQualification {
     @OneToMany(mappedBy = "payloadQualification", fetch = FetchType.LAZY)
     private Set<Payload> payloads;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "payloadQualifications", fetch = FetchType.LAZY)
     private Set<Employee> employees;
 
     public PayloadQualification() {

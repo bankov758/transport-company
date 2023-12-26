@@ -6,7 +6,7 @@ public interface CrudDao<T> {
 
     List<T> getAll();
 
-    void create(T entity);
+    void  create(T entity);
 
     void update(T entity);
 

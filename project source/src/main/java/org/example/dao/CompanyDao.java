@@ -13,8 +13,8 @@ import java.util.List;
 
 public class CompanyDao extends AbstractDao<Company> {
 
-    public CompanyDao(Class<Company> clazz) {
-        super(clazz);
+    public CompanyDao() {
+        super(Company.class);
     }
 
     public List<EmployeeDto> getCompanyEmployeesDTO(String companyName) {
