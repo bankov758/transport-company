@@ -3,6 +3,7 @@ package org.example.dao;
 import jakarta.persistence.EntityNotFoundException;
 import org.example.configuration.HibernateConfig;
 import org.example.dao.contracts.CrudDao;
+import org.example.entity.OrderBy;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -39,6 +40,13 @@ public abstract class AbstractDao<T> implements CrudDao<T> {
     public List<T> getAll() {
         try (Session session = HibernateConfig.getSessionFactory().openSession()) {
             return session.createQuery(format(" from %s ", clazz.getName()), clazz).list();
+        }
+    }
+
+    public List<T> getAll(String fieldToOrderBy, OrderBy orderDirection) {
+        String query = format(" from %s order by %s %s ", clazz.getName(), fieldToOrderBy, orderDirection.toString());
+        try (Session session = HibernateConfig.getSessionFactory().openSession()) {
+            return session.createQuery(query, clazz).list();
         }
     }
 

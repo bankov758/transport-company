@@ -43,7 +43,7 @@ public class Main {
 //            orderService.pay(1, 2);
 //            orderService.pay(1, 3);
 
-            System.out.println(employeeDao.getEmployeesBySalary(200,QueryOperator.MORE_THAN, Optional.empty()));
+            System.out.println(orderDao.getAll("arrivalPoint", OrderBy.ASC));
             //System.out.println(orderService.isOrderPayed(1));
 
             //createPdf(orderDao.getByField("id", "1"), orderDao);
