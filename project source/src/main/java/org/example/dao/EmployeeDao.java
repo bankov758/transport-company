@@ -1,6 +1,7 @@
 package org.example.dao;
 
 import org.example.configuration.HibernateConfig;
+import org.example.dto.EmployeeDto;
 import org.example.entity.Employee;
 import org.example.entity.enumeration.OrderBy;
 import org.example.entity.enumeration.QueryOperator;
@@ -64,6 +65,22 @@ public class EmployeeDao extends AbstractDao<Employee> {
             transaction.commit();
         }
         return employee;
+    }
+
+    public List<EmployeeDto> getEmployeesWithOrders() {
+        List<EmployeeDto> employees;
+        try (Session session = HibernateConfig.getSessionFactory().openSession()) {
+            Transaction transaction = session.beginTransaction();
+            employees = session.createQuery(
+                            " select new org.example.dto.EmployeeDto(e.id, e.firstName, e.lastName, count(*)) " +
+                                    " from Employee e " +
+                                    " join e.orders o " +
+                                    " group by e.id ",
+                            EmployeeDto.class)
+                    .getResultList();
+            transaction.commit();
+        }
+        return employees;
     }
 
     private void checkIfEmployeeExists(Employee entity) {

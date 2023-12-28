@@ -16,10 +16,6 @@ import java.util.Optional;
 
 public class CompanyDao extends AbstractDao<Company> {
 
-    private static final String UNSUPPORTED_SORT =
-            "Sort should have at least one or maximum two params divided by _ symbol!";
-
-
     public CompanyDao() {
         super(Company.class);
     }

@@ -16,10 +16,8 @@ public class PersonDto {
 
     @Override
     public String toString() {
-        return "PersonDto{" +
-                "id=" + id +
+        return "id=" + id +
                 ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                '}';
+                ", lastName='" + lastName + '\'';
     }
 }

@@ -45,6 +45,43 @@ public class OrderDao extends AbstractDao<Order>{
         return employees;
     }
 
+    public Long getNumberOfOrdersForCompany(String name) {
+        Long numOfOrders;
+        try (Session session =  HibernateConfig.getSessionFactory().openSession()) {
+            Transaction transaction = session.beginTransaction();
+            numOfOrders = session.createQuery(
+                            " select count(*) from Order o " +
+                                    " join o.company c " +
+                                    " where c.name = :name " +
+                                    " and o.endTime <= current timestamp ",
+                            Long.class)
+                    .setParameter("name", name)
+                    .getSingleResult();
+            transaction.commit();
+        }
+        return numOfOrders;
+    }
+
+    /**
+     * Get the income of (already paid and finished) orders for a given company
+     */
+    public Double getIncomeFromOrdersForCompany(String name) {
+        Double numOfOrders;
+        try (Session session =  HibernateConfig.getSessionFactory().openSession()) {
+            Transaction transaction = session.beginTransaction();
+            numOfOrders = session.createQuery(
+                            " select sum(o.price) from Order o " +
+                                    " join o.company c " +
+                                    " join o.receipts r " +
+                                    " where c.name = :name " +
+                                    " and o.endTime <= current timestamp ",
+                            Double.class)
+                    .setParameter("name", name)
+                    .getSingleResult();
+            transaction.commit();
+        }
+        return numOfOrders;
+    }
 
 
 }

@@ -44,7 +44,7 @@ public class Main {
 //            orderService.pay(1, 2);
 //            orderService.pay(1, 3);
 
-            System.out.println(orderDao.getAll("arrivalPoint", OrderBy.ASC));
+            System.out.println(employeeDao.getEmployeesWithOrders());
             //System.out.println(orderService.isOrderPayed(1));
 
             //createPdf(orderDao.getByField("id", "1"), orderDao);
@@ -83,8 +83,8 @@ public class Main {
 
     private static void createOrders(PayloadDao payloadDao, EmployeeDao employeeDao, CompanyDao companyDao, ClientDao clientDao, VehicleDao vehicleDao, OrderDao orderDao) {
         Order order = OrderMapper.dtoToObject(new CreateOrderDto(
-                LocalDateTime.now(),
-                LocalDateTime.now().plusDays(2),
+                LocalDateTime.now().minusDays(3),
+                LocalDateTime.now().minusDays(2),
                 "Sofia",
                 "Atina",
                 1000,
