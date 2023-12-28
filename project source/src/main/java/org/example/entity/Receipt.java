@@ -13,10 +13,10 @@ public class Receipt {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
     private Client client;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
     private Order order;
 
     public Receipt() {
@@ -68,8 +68,8 @@ public class Receipt {
     public String toString() {
         return "Receipt{" +
                 "id=" + id +
-                ", client=" + client +
-                ", order=" + order +
+                ", client=" + client.getFirstName() + " " + client.getLastName() +
+                ", order=" + order.getId() +
                 '}';
     }
 }

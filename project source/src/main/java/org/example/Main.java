@@ -1,5 +1,10 @@
 package org.example;
 
+import com.itextpdf.kernel.pdf.PdfDocument;
+import com.itextpdf.kernel.pdf.PdfWriter;
+import com.itextpdf.layout.Document;
+import com.itextpdf.layout.element.Paragraph;
+import com.itextpdf.layout.properties.TextAlignment;
 import org.example.configuration.HibernateConfig;
 import org.example.dao.*;
 import org.example.dto.*;
@@ -10,9 +15,10 @@ import org.example.util.*;
 import org.hibernate.Session;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.Set;
+import java.util.Optional;
 
 public class Main {
     public static void main(String[] args) {
@@ -25,15 +31,52 @@ public class Main {
             PayloadQualificationDao payloadQualificationDao = new PayloadQualificationDao();
             PayloadDao payloadDao = new PayloadDao();
             OrderDao orderDao = new OrderDao();
+            ReceiptDao receiptDao = new ReceiptDao();
 
-            createCompanies(companyDao);
-            createVehicles(vehicleDao, companyDao);
-            createPayloads(payloadQualificationDao, payloadDao);
-            createPersons(employeeDao, companyDao, clientDao, payloadQualificationDao);
-            createOrders(payloadDao, employeeDao, companyDao, clientDao, vehicleDao, orderDao);
+//            createCompanies(companyDao);
+//            createVehicles(vehicleDao, companyDao);
+//            createPayloads(payloadQualificationDao, payloadDao);
+//            createPersons(employeeDao, companyDao, clientDao, payloadQualificationDao);
+            //createOrders(payloadDao, employeeDao, companyDao, clientDao, vehicleDao, orderDao);
 
-            //System.out.println(payloadQualificationDao.getAll());
-            System.out.println(employeeDao.getAll());
+//            OrderService orderService = new OrderService();
+//            orderService.pay(1, 2);
+//            orderService.pay(1, 3);
+
+            System.out.println(companyDao.filterByIncome(2000f, QueryOperator.EQUALS, Optional.of("desc")));
+            //System.out.println(orderService.isOrderPayed(1));
+
+            //createPdf(orderDao.getByField("id", "1"), orderDao);
+        }
+    }
+
+    public static void createPdf(Order order, OrderDao orderDao) {
+        String filePath = "E:\\Projects\\transport_company\\project source\\src\\main\\resources\\example.pdf";
+        try (PdfWriter writer = new PdfWriter(filePath)) {
+            try (PdfDocument pdf = new PdfDocument(writer)) {
+                try (Document document = new Document(pdf)) {
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+                    Paragraph title = new Paragraph("Order #" + order.getId())
+                            .setFontSize(18)
+                            .setBold()
+                            .setTextAlignment(TextAlignment.CENTER);
+                    document.add(title);
+                    document.add(new Paragraph("Arrival point: " + order.getArrivalPoint()));
+                    document.add(new Paragraph("Departure point: " + order.getDeparturePoint()));
+                    document.add(new Paragraph("Start time: " + order.getStartTime().format(formatter)));
+                    document.add(new Paragraph("End time: " + order.getEndTime().format(formatter)));
+                    document.add(new Paragraph("Price: " + order.getPrice()));
+                    document.add(new Paragraph("Driver: " + order.getDriver().getFirstName() + " " + order.getDriver().getLastName()));
+                    document.add(new Paragraph("Company: " + order.getCompany().getName()));
+//                    for (Client client : orderDao.) {
+//                        document.add(new Paragraph("Clients: ").setFirstLineIndent(1));
+//                        //document.add(new)
+//                    }
+                }
+            }
+            System.out.println("PDF created successfully at: " + filePath);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -52,7 +95,9 @@ public class Main {
         order.setVehicle(vehicleDao.getSuitableForOrder(order));
         orderDao.create(order);
         OrderService orderService = new OrderService();
-        orderService.addClient(order, 1);
+        orderService.addClient(order, 2);
+        orderService.addClient(order, 3);
+        orderService.addClient(order, 4);
     }
 
     private static void createPayloads(PayloadQualificationDao payloadQualificationDao, PayloadDao payloadDao) {
@@ -64,10 +109,11 @@ public class Main {
     }
 
     private static void createCompanies(CompanyDao companyDao) {
-        companyDao.create(CompanyMapper.dtoToObject(new CompanyDto("DHL")));
+        companyDao.create(CompanyMapper.dtoToObject(new CompanyDto("DHL", 0)));
     }
 
     private static void createPersons(EmployeeDao employeeDao, CompanyDao companyDao, ClientDao clientDao,PayloadQualificationDao payloadQualificationDao) {
+        //Employees
         Employee employee = PersonMapper.createDtoToObject(new CreateEmployeeDto(
                 "Ivo",
                 "Bankov",
@@ -78,10 +124,19 @@ public class Main {
         EmployeeService employeeService = new EmployeeService();
         employeeService.addPayloadQualification(employee,"Flammable goods");
 
+        //Clients
         clientDao.create(PersonMapper.createDtoToObject(new CreateClientDto(
                 "Petar",
                 "Petkov",
                 "1141164465")));
+        clientDao.create(PersonMapper.createDtoToObject(new CreateClientDto(
+                "ivan",
+                "ivanov",
+                "1141164455")));
+        clientDao.create(PersonMapper.createDtoToObject(new CreateClientDto(
+                "bobi",
+                "boyanov",
+                "1141164444")));
     }
 
     private static void createVehicles(VehicleDao vehicleDao, CompanyDao companyDao) {

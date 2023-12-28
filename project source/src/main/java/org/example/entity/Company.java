@@ -2,13 +2,19 @@ package org.example.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
+import org.example.dto.CompanyDto;
 
 import java.util.Objects;
 import java.util.Set;
 
 @Entity
 @Table(name = "company",
-       uniqueConstraints = @UniqueConstraint(columnNames = {"name"}))
+        uniqueConstraints = @UniqueConstraint(columnNames = {"name"}))
+@SqlResultSetMapping(name = "CompanyDTOMapping",
+        classes = {
+                @ConstructorResult(targetClass = CompanyDto.class,
+                        columns = {@ColumnResult(name = "name"), @ColumnResult(name = "income")}
+                )})
 public class Company {
 
     private static final int MIN_NAME_LENGTH = 3;

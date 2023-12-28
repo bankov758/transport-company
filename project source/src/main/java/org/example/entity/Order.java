@@ -12,7 +12,7 @@ public class Order {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private int id;
 
     @Column(name = "start_time", nullable = false)
     private LocalDateTime startTime;
@@ -29,16 +29,16 @@ public class Order {
     @Column(name = "price", nullable = false)
     private float price;
 
-    @OneToOne(mappedBy = "order", fetch = FetchType.LAZY, optional = false)
+    @OneToOne(mappedBy = "order", optional = false)
     private Payload payload;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(optional = false)
     private Employee driver;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(optional = false)
     private Company company;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     private Vehicle vehicle;
 
     @ManyToMany(fetch = FetchType.LAZY)
@@ -50,7 +50,7 @@ public class Order {
     public Order() {
     }
 
-    public Order(long id, LocalDateTime startTime, LocalDateTime endTime, String departurePoint, String arrivalPoint,
+    public Order(int id, LocalDateTime startTime, LocalDateTime endTime, String departurePoint, String arrivalPoint,
                  float price, Payload payload, Employee driver, Company company, Vehicle vehicle, Set<Client> clients) {
         this.id = id;
         this.startTime = startTime;
@@ -65,7 +65,7 @@ public class Order {
         this.clients = clients;
     }
 
-    public Order(long id, LocalDateTime startTime, LocalDateTime endTime, String departurePoint, String arrivalPoint,
+    public Order(int id, LocalDateTime startTime, LocalDateTime endTime, String departurePoint, String arrivalPoint,
                  float price, Payload payload, Employee driver, Company company, Vehicle vehicle, Set<Client> clients, Set<Receipt> receipts) {
         this(id, startTime, endTime, departurePoint, arrivalPoint, price, payload, driver, company, vehicle, clients);
         this.receipts = receipts;
@@ -75,7 +75,7 @@ public class Order {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

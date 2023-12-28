@@ -18,6 +18,12 @@ dependencies {
     implementation("org.hibernate.validator:hibernate-validator:8.0.1.Final")
     implementation("org.hibernate.validator:hibernate-validator-annotation-processor:8.0.1.Final")
     implementation("org.glassfish.expressly:expressly:5.0.0")
+    implementation("com.itextpdf:itextpdf:5.5.13.3")
+    implementation("com.itextpdf:kernel:8.0.2")
+    implementation("com.itextpdf:layout:8.0.2")
+
+
+
 }
 
 tasks.test {
