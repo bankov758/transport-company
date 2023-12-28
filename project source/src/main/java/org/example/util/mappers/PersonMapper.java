@@ -1,4 +1,4 @@
-package org.example.util;
+package org.example.util.mappers;
 
 import org.example.dto.CreateClientDto;
 import org.example.dto.CreateEmployeeDto;

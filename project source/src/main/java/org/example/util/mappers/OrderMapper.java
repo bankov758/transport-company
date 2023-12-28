@@ -1,4 +1,4 @@
-package org.example.util;
+package org.example.util.mappers;
 
 import org.example.dto.CreateOrderDto;
 import org.example.entity.Order;
