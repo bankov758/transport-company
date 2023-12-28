@@ -90,7 +90,8 @@ public class CompanyDao extends AbstractDao<Company> {
             sort.ifPresent(value -> {
                 queryString.append(" order by income ").append(value.trim());
             });
-            companies = session.createNativeQuery(queryString.toString(), "CompanyDTOMapping", CompanyDto.class).getResultList();
+            companies = session.createNativeQuery(queryString.toString(),
+                    "CompanyDTOMapping", CompanyDto.class).getResultList();
             transaction.commit();
         }
         return companies;

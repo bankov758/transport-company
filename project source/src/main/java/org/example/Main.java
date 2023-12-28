@@ -109,15 +109,16 @@ public class Main {
     }
 
     private static void createCompanies(CompanyDao companyDao) {
-        companyDao.create(CompanyMapper.dtoToObject(new CompanyDto("DHL", 0)));
+        companyDao.create(CompanyMapper.dtoToObject(new CompanyDto("DHL")));
     }
 
-    private static void createPersons(EmployeeDao employeeDao, CompanyDao companyDao, ClientDao clientDao,PayloadQualificationDao payloadQualificationDao) {
+    private static void createPersons(EmployeeDao employeeDao, CompanyDao companyDao, ClientDao clientDao) {
         //Employees
         Employee employee = PersonMapper.createDtoToObject(new CreateEmployeeDto(
                 "Ivo",
                 "Bankov",
                 "0141164465",
+                1000,
                 companyDao.getByField("name", "DHL")
         ));
         employeeDao.create(employee);

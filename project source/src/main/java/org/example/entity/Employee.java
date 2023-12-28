@@ -11,6 +11,9 @@ public class Employee extends Person {
     @ManyToOne
     private Company company;
 
+    @Column(name = "salary")
+    private float salary;
+
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<PayloadQualification> payloadQualifications;
 
@@ -20,16 +23,25 @@ public class Employee extends Person {
     public Employee() {
     }
 
-    public Employee(int id, String firstName, String lastName, String ssn, Company company) {
+    public Employee(int id, String firstName, String lastName, String ssn, float salary, Company company) {
         super(id, firstName, lastName, ssn);
         this.company = company;
+        this.salary = salary;
     }
 
-    public Employee(int id, String firstName, String lastName, String ssn, Company company,
+    public Employee(int id, String firstName, String lastName, String ssn, float salary, Company company,
                     Set<PayloadQualification> payloadQualifications, Set<Order> orders) {
-        this(id, firstName, lastName, ssn, company);
+        this(id, firstName, lastName, ssn, salary, company);
         this.payloadQualifications = payloadQualifications;
         this.orders = orders;
+    }
+
+    public float getSalary() {
+        return salary;
+    }
+
+    public void setSalary(float salary) {
+        this.salary = salary;
     }
 
     public Company getCompany() {

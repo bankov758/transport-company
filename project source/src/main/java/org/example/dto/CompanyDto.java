@@ -1,18 +1,17 @@
 package org.example.dto;
 
-import jakarta.persistence.ColumnResult;
-import jakarta.persistence.ConstructorResult;
-import jakarta.persistence.SqlResultSetMapping;
-
-
 public class CompanyDto {
 
     public String name;
 
     public double income;
 
-    public CompanyDto(String name, double income) {
+    public CompanyDto(String name) {
         this.name = name;
+    }
+
+    public CompanyDto(String name, double income) {
+        this(name);
         this.income = income;
     }
 

@@ -10,6 +10,7 @@ import org.example.entity.Person;
 public class PersonMapper {
     public static Employee createDtoToObject(CreateEmployeeDto employeeDto){
         Employee employee = createDtoToObject(employeeDto, new Employee());
+        employee.setSalary(employeeDto.getSalary());
         employee.setCompany(employeeDto.getCompany());
         return employee;
     }
