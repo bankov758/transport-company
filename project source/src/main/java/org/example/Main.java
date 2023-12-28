@@ -10,7 +10,6 @@ import org.example.dao.*;
 import org.example.dto.*;
 import org.example.entity.*;
 import org.example.entity.enumeration.CapacityUnit;
-import org.example.entity.enumeration.OrderBy;
 import org.example.service.EmployeeService;
 import org.example.service.OrderService;
 import org.example.util.*;
@@ -44,7 +43,9 @@ public class Main {
 //            orderService.pay(1, 2);
 //            orderService.pay(1, 3);
 
-            System.out.println(employeeDao.getEmployeesWithOrders());
+            System.out.println(companyDao.getCompanyIncomeForPeriod("DHL",
+                    LocalDateTime.of(2023, 12, 24, 23, 0),
+                    LocalDateTime.of(2023, 12, 29, 23, 0)));
             //System.out.println(orderService.isOrderPayed(1));
 
             //createPdf(orderDao.getByField("id", "1"), orderDao);

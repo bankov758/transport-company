@@ -67,7 +67,25 @@ public class EmployeeDao extends AbstractDao<Employee> {
         return employee;
     }
 
-    public List<EmployeeDto> getEmployeesWithOrders() {
+    public List<EmployeeDto> getEmployeesWithPayedOrders() {
+        List<EmployeeDto> employees;
+        try (Session session = HibernateConfig.getSessionFactory().openSession()) {
+            Transaction transaction = session.beginTransaction();
+            employees = session.createQuery(
+                            " select new org.example.dto.EmployeeDto(e.id, e.firstName, e.lastName, " +
+                                    " count(distinct(e.id)), sum(o.price)) " +
+                                    " from Employee e " +
+                                    " join e.orders o " +
+                                    " join o.receipts r " +
+                                    " group by e.id ",
+                            EmployeeDto.class)
+                    .getResultList();
+            transaction.commit();
+        }
+        return employees;
+    }
+
+    public List<EmployeeDto> getEmployeesWithNumOfOrders() {
         List<EmployeeDto> employees;
         try (Session session = HibernateConfig.getSessionFactory().openSession()) {
             Transaction transaction = session.beginTransaction();
