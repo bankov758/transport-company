@@ -1,6 +1,6 @@
 package org.example.dto;
 
-import org.example.entity.CapacityUnit;
+import org.example.entity.enumeration.CapacityUnit;
 import org.example.entity.PayloadQualification;
 
 public class CreatePayloadDto {

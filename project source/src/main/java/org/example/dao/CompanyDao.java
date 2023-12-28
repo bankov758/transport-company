@@ -6,8 +6,8 @@ import org.example.dto.CompanyDto;
 import org.example.dto.EmployeeDto;
 import org.example.dto.VehicleDto;
 import org.example.entity.Company;
-import org.example.entity.OrderBy;
-import org.example.entity.QueryOperator;
+import org.example.entity.enumeration.OrderBy;
+import org.example.entity.enumeration.QueryOperator;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 

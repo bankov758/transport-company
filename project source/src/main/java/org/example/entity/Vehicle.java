@@ -3,6 +3,7 @@ package org.example.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
+import org.example.entity.enumeration.CapacityUnit;
 
 import java.util.Objects;
 import java.util.Set;

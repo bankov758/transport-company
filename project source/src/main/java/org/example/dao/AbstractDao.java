@@ -3,7 +3,7 @@ package org.example.dao;
 import jakarta.persistence.EntityNotFoundException;
 import org.example.configuration.HibernateConfig;
 import org.example.dao.contracts.CrudDao;
-import org.example.entity.OrderBy;
+import org.example.entity.enumeration.OrderBy;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 

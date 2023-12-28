@@ -2,6 +2,7 @@ package org.example.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Positive;
+import org.example.entity.enumeration.CapacityUnit;
 
 import java.util.Objects;
 

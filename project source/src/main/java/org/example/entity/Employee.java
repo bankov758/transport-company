@@ -1,6 +1,7 @@
 package org.example.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Positive;
 
 import java.util.Set;
 
@@ -8,10 +9,11 @@ import java.util.Set;
 @Table(name = "employee")
 public class Employee extends Person {
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     private Company company;
 
     @Column(name = "salary")
+    @Positive(message = "Employee's salary should be a positive number!")
     private float salary;
 
     @ManyToMany(fetch = FetchType.EAGER)

@@ -1,4 +1,4 @@
-package org.example.entity;
+package org.example.entity.enumeration;
 
 public enum QueryOperator {
     MORE_THAN(" > "), LESS_THAN(" < "),

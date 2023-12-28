@@ -2,16 +2,13 @@ package org.example.dao;
 
 import org.example.configuration.HibernateConfig;
 import org.example.entity.Employee;
-import org.example.entity.OrderBy;
-import org.example.entity.Payload;
-import org.example.entity.QueryOperator;
+import org.example.entity.enumeration.OrderBy;
+import org.example.entity.enumeration.QueryOperator;
 import org.example.exception.DuplicateEntityException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 public class EmployeeDao extends AbstractDao<Employee> {
