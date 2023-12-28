@@ -36,14 +36,14 @@ public class Main {
 //            createCompanies(companyDao);
 //            createVehicles(vehicleDao, companyDao);
 //            createPayloads(payloadQualificationDao, payloadDao);
-//            createPersons(employeeDao, companyDao, clientDao, payloadQualificationDao);
-            //createOrders(payloadDao, employeeDao, companyDao, clientDao, vehicleDao, orderDao);
-
+//            createPersons(employeeDao, companyDao, clientDao);
+//            createOrders(payloadDao, employeeDao, companyDao, clientDao, vehicleDao, orderDao);
+//
 //            OrderService orderService = new OrderService();
 //            orderService.pay(1, 2);
 //            orderService.pay(1, 3);
 
-            System.out.println(companyDao.filterByIncome(2000f, QueryOperator.EQUALS, Optional.of("desc")));
+            System.out.println(employeeDao.getEmployeesBySalary(200,QueryOperator.MORE_THAN, Optional.empty()));
             //System.out.println(orderService.isOrderPayed(1));
 
             //createPdf(orderDao.getByField("id", "1"), orderDao);

@@ -10,7 +10,7 @@ import java.util.Set;
 @Entity
 @Table(name = "company",
         uniqueConstraints = @UniqueConstraint(columnNames = {"name"}))
-@SqlResultSetMapping(name = "CompanyDTOMapping",
+@SqlResultSetMapping(name = CompanyDto.RESULT_SET_MAPPING_NAME,
         classes = {
                 @ConstructorResult(targetClass = CompanyDto.class,
                         columns = {@ColumnResult(name = "name"), @ColumnResult(name = "income")}

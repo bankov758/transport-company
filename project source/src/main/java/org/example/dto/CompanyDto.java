@@ -2,6 +2,8 @@ package org.example.dto;
 
 public class CompanyDto {
 
+    public static final String RESULT_SET_MAPPING_NAME = "CompanyDTOMapping";
+
     public String name;
 
     public double income;

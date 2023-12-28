@@ -2,10 +2,17 @@ package org.example.dao;
 
 import org.example.configuration.HibernateConfig;
 import org.example.entity.Employee;
+import org.example.entity.OrderBy;
 import org.example.entity.Payload;
+import org.example.entity.QueryOperator;
 import org.example.exception.DuplicateEntityException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 public class EmployeeDao extends AbstractDao<Employee> {
 
@@ -20,16 +27,43 @@ public class EmployeeDao extends AbstractDao<Employee> {
     }
 
     public Employee getEmployeeByQualification(String qualification) {
-        Employee employee;
+        List<Employee> employees = getEmployeesByQualification(qualification, Optional.empty());
+        if (employees != null && !employees.isEmpty()) {
+            return employees.get(0);
+        }
+        return null;
+    }
+
+    public List<Employee> getEmployeesByQualification(String qualification, Optional<OrderBy> orderBySalary) {
+        List<Employee> employee;
         try (Session session = HibernateConfig.getSessionFactory().openSession()) {
             Transaction transaction = session.beginTransaction();
-            employee = session.createQuery(
-                            " select e from Employee e " +
-                                    " join e.payloadQualifications pQ " +
-                                    " where pQ.qualification = :qualification ",
-                            Employee.class)
+            StringBuilder queryBuilder = new StringBuilder(" select e from Employee e " +
+                    " join e.payloadQualifications pQ " +
+                    " where pQ.qualification = :qualification ");
+            orderBySalary.ifPresent(value -> {
+                queryBuilder.append(" order by salary ").append(value);
+            });
+            employee = session.createQuery(queryBuilder.toString(), Employee.class)
                     .setParameter("qualification", qualification)
-                    .getSingleResult();
+                    .getResultList();
+            transaction.commit();
+        }
+        return employee;
+    }
+
+    public List<Employee> getEmployeesBySalary(float salary, QueryOperator queryOperator, Optional<OrderBy> orderBySalary) {
+        List<Employee> employee;
+        try (Session session = HibernateConfig.getSessionFactory().openSession()) {
+            Transaction transaction = session.beginTransaction();
+            StringBuilder queryBuilder = new StringBuilder(" select e from Employee e " +
+                    " where e.salary " + queryOperator.getSymbol() + " :salary ");
+            orderBySalary.ifPresent(value -> {
+                queryBuilder.append(" order by salary ").append(value);
+            });
+            employee = session.createQuery(queryBuilder.toString(), Employee.class)
+                    .setParameter("salary", salary)
+                    .getResultList();
             transaction.commit();
         }
         return employee;
