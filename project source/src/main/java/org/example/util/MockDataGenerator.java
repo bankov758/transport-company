@@ -44,12 +44,42 @@ public class MockDataGenerator {
         createOrders();
 
         OrderService orderService = new OrderService();
-        orderService.pay(1, 2);
-        orderService.pay(1, 3);
+        orderService.pay(1, "Silvia");
+        //orderService.pay(1, "Hristo");
     }
 
     private void createOrders() {
+        OrderService orderService = new OrderService();
         Order order = OrderMapper.dtoToObject(new CreateOrderDto(
+                LocalDateTime.of(2023, 12, 24, 23, 0),
+                LocalDateTime.of(2023, 12, 29, 23, 0),
+                "Sofia",
+                "Atina",
+                1000,
+                payloadDao.getPayloadByQualification("Bus"),
+                employeeDao.getEmployeeByQualification("Bus"),
+                companyDao.getByField("name", "DHL"),
+                vehicleDao.getById(1),
+                new HashSet<>(Arrays.asList(clientDao.getByField("ssn", "1141164465")))
+        ));
+        orderDao.create(order);
+        orderService.addClient(order, "Silvia");
+        orderService.addClient(order, "Hristo");
+        Order order1 = OrderMapper.dtoToObject(new CreateOrderDto(
+                LocalDateTime.of(2023, 12, 24, 23, 0),
+                LocalDateTime.of(2023, 12, 29, 23, 0),
+                "London",
+                "Amsterdam",
+                3000,
+                payloadDao.getPayloadByQualification("Flammable goods"),
+                employeeDao.getEmployeeByQualification("Flammable goods"),
+                companyDao.getByField("name", "DHL"),
+                vehicleDao.getById(1),
+                new HashSet<>(Arrays.asList(clientDao.getByField("ssn", "1141164465")))
+        ));
+        orderDao.create(order1);
+        orderService.addClient(order1, "Konstantin");
+        Order order2 = OrderMapper.dtoToObject(new CreateOrderDto(
                 LocalDateTime.of(2023, 12, 24, 23, 0),
                 LocalDateTime.of(2023, 12, 29, 23, 0),
                 "Sofia",
@@ -61,11 +91,8 @@ public class MockDataGenerator {
                 vehicleDao.getById(1),
                 new HashSet<>(Arrays.asList(clientDao.getByField("ssn", "1141164465")))
         ));
-        orderDao.create(order);
-        OrderService orderService = new OrderService();
-        orderService.addClient(order, 2);
-        orderService.addClient(order, 3);
-        orderService.addClient(order, 4);
+        orderDao.create(order2);
+        orderService.addClient(order2, "Marian");
     }
 
     private void createPayloads() {
@@ -86,28 +113,70 @@ public class MockDataGenerator {
         Employee employee = PersonMapper.createDtoToObject(new CreateEmployeeDto(
                 "Ivo",
                 "Bankov",
-                "0141164465",
-                1000,
+                "0141864465",
+                2000,
                 companyDao.getByField("name", "DHL")
         ));
         employeeDao.create(employee);
         EmployeeService employeeService = new EmployeeService();
         employeeService.addPayloadQualification(employee,"Flammable goods");
+
+        Employee employee2 = PersonMapper.createDtoToObject(new CreateEmployeeDto(
+                "Martina",
+                "Georgieva",
+                "0141964465",
+                2000,
+                companyDao.getByField("name", "DHL")
+        ));
+        employeeDao.create(employee2);
+        employeeService.addPayloadQualification(employee2,"Flammable goods");
+
+        Employee employee3 = PersonMapper.createDtoToObject(new CreateEmployeeDto(
+                "Kristina",
+                "Marinova",
+                "0140164465",
+                1000,
+                companyDao.getByField("name", "Speedy")
+        ));
+        employeeDao.create(employee3);
+        employeeService.addPayloadQualification(employee3,"Flammable goods");
+
+        Employee employee4 = PersonMapper.createDtoToObject(new CreateEmployeeDto(
+                "Ivailo",
+                "Dimitrov",
+                "0141164435",
+                3000,
+                companyDao.getByField("name", "Discordia")
+        ));
+        employeeDao.create(employee4);;
+        employeeService.addPayloadQualification(employee4,"Flammable goods");
     }
 
     private void createClients() {
         clientDao.create(PersonMapper.createDtoToObject(new CreateClientDto(
-                "Petar",
-                "Petkov",
+                "Silvia",
+                "Petkova",
                 "1141164465")));
         clientDao.create(PersonMapper.createDtoToObject(new CreateClientDto(
-                "ivan",
-                "ivanov",
+                "Ivan",
+                "Ivanov",
                 "1141164455")));
         clientDao.create(PersonMapper.createDtoToObject(new CreateClientDto(
-                "bobi",
-                "boyanov",
+                "Borislava",
+                "Boyanova",
                 "1141164444")));
+        clientDao.create(PersonMapper.createDtoToObject(new CreateClientDto(
+                "Marian",
+                "Hristov",
+                "1241164465")));
+        clientDao.create(PersonMapper.createDtoToObject(new CreateClientDto(
+                "Hristo",
+                "Smirnenski",
+                "1341164455")));
+        clientDao.create(PersonMapper.createDtoToObject(new CreateClientDto(
+                "Konstantin",
+                "Pavlov",
+                "1741164444")));
     }
 
     private void createVehicles() {
@@ -119,6 +188,14 @@ public class MockDataGenerator {
                 new CreateVehicleDto("semi-truck", CapacityUnit.KILOGRAM,
                         500, "ov0113da",
                         companyDao.getByField("name", "DHL"))));
+        vehicleDao.create(VehicleMapper.createDtoToObject(
+                new CreateVehicleDto("bus", CapacityUnit.KILOGRAM,
+                        50, "ov0113da",
+                        companyDao.getByField("name", "Speedy"))));
+        vehicleDao.create(VehicleMapper.createDtoToObject(
+                new CreateVehicleDto("semi-truck", CapacityUnit.KILOGRAM,
+                        800, "ov0113da",
+                        companyDao.getByField("name", "Discordia"))));
     }
 
 }

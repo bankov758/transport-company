@@ -22,8 +22,8 @@ public class OrderService {
         receiptDao = new ReceiptDao();
     }
 
-    public void addClient(Order order, int clientId){
-        Client client = clientDao.getById(clientId);
+    public void addClient(Order order, String name){
+        Client client = clientDao.getByField("name", name);
         addClient(order, client);
     }
 
@@ -34,9 +34,9 @@ public class OrderService {
         orderDao.update(order);
     }
 
-    public void pay(int orderId, int clientId) {
-        Client client = clientDao.getById(clientId);
-        Order order = orderDao.getByField("id", String.valueOf(orderId));
+    public void pay(int orderId, String name) {
+        Client client = clientDao.getByField("name", name);
+        Order order = orderDao.getById(orderId);
         pay(order, client);
     }
 
