@@ -27,7 +27,7 @@ public abstract class AbstractDao<T> implements CrudDao<T> {
         }
     }
 
-    public T getById(int id) {
+    public T getById(long id) {
         T entity;
         try (Session session = HibernateConfig.getSessionFactory().openSession()) {
             Transaction transaction = session.beginTransaction();

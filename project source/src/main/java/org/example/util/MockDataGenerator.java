@@ -58,9 +58,9 @@ public class MockDataGenerator {
                 payloadDao.getPayloadByQualification("Flammable goods"),
                 employeeDao.getEmployeeByQualification("Flammable goods"),
                 companyDao.getByField("name", "DHL"),
+                vehicleDao.getById(1),
                 new HashSet<>(Arrays.asList(clientDao.getByField("ssn", "1141164465")))
         ));
-        order.setVehicle(vehicleDao.getSuitableForOrder(order));
         orderDao.create(order);
         OrderService orderService = new OrderService();
         orderService.addClient(order, 2);
@@ -72,7 +72,7 @@ public class MockDataGenerator {
         payloadQualificationDao.create(PayloadMapper.dtoToObject(new CreatePayloadQualificationDto("Flammable goods")));
         payloadDao.create(PayloadMapper.dtoToObject(new CreatePayloadDto(
                 CapacityUnit.KILOGRAM,
-                100,
+                700,
                 payloadQualificationDao.getByField("qualification", "Flammable goods"))));
     }
 

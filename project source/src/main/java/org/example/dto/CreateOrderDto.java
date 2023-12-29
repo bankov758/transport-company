@@ -23,13 +23,15 @@ public class CreateOrderDto {
 
     private Company company;
 
+    private Vehicle vehicle;
+
     private Set<Client> clients;
 
     public CreateOrderDto(LocalDateTime startTime, LocalDateTime endTime,
                           String departurePoint, String arrivalPoint,
                           float price, Payload payload,
                           Employee driver, Company company,
-                          Set<Client> clients) {
+                          Vehicle vehicle, Set<Client> clients) {
         this.startTime = startTime;
         this.endTime = endTime;
         this.departurePoint = departurePoint;
@@ -38,6 +40,7 @@ public class CreateOrderDto {
         this.payload = payload;
         this.driver = driver;
         this.company = company;
+        this.vehicle = vehicle;
         this.clients = clients;
     }
 
@@ -71,6 +74,10 @@ public class CreateOrderDto {
 
     public Company getCompany() {
         return company;
+    }
+
+    public Vehicle getVehicle() {
+        return vehicle;
     }
 
     public Set<Client> getClients() {

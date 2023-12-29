@@ -28,7 +28,7 @@ public class OrderDao extends AbstractDao<Order> {
 
     private static void checkOrderData(Order order) {
         PayloadQualification orderPayloadQlf = order.getPayload().getPayloadQualification();
-        if (order.getDriver().getPayloadQualifications().contains(orderPayloadQlf)) {
+        if (!order.getDriver().getPayloadQualifications().contains(orderPayloadQlf)) {
             throw new InvalidBusinessData("Driver is not qualified for order payload - " +
                     orderPayloadQlf.getQualification());
         }

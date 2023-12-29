@@ -22,10 +22,10 @@ public class Payload {
     @Positive(message = "Payload's unit value should be a positive number!")
     private float unitValue;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     private PayloadQualification payloadQualification;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "payload", fetch = FetchType.LAZY)
     private Order order;
 
     public Payload() {

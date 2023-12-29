@@ -23,10 +23,10 @@ public class Main {
             OrderDao orderDao = new OrderDao();
             ReceiptDao receiptDao = new ReceiptDao();
 
-            System.out.println(companyDao.getCompanyIncomeForPeriod("DHL",
-                    LocalDateTime.of(2023, 12, 24, 23, 0),
-                    LocalDateTime.of(2023, 12, 29, 23, 0)));
-            //System.out.println(orderService.isOrderPayed(1));
+//            System.out.println(companyDao.getCompanyIncomeForPeriod("DHL",
+//                    LocalDateTime.of(2023, 12, 24, 23, 0),
+//                    LocalDateTime.of(2023, 12, 29, 23, 0)));
+            System.out.println(orderDao.getById(1));
         }
     }
 

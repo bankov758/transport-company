@@ -12,7 +12,7 @@ public class Order {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private long id;
 
     @Column(name = "start_time", nullable = false)
     private LocalDateTime startTime;
@@ -29,7 +29,7 @@ public class Order {
     @Column(name = "price", nullable = false)
     private float price;
 
-    @OneToOne(mappedBy = "order", optional = false)
+    @OneToOne(optional = false)
     private Payload payload;
 
     @ManyToOne(optional = false)
@@ -50,7 +50,7 @@ public class Order {
     public Order() {
     }
 
-    public Order(int id, LocalDateTime startTime, LocalDateTime endTime, String departurePoint, String arrivalPoint,
+    public Order(long id, LocalDateTime startTime, LocalDateTime endTime, String departurePoint, String arrivalPoint,
                  float price, Payload payload, Employee driver, Company company, Vehicle vehicle, Set<Client> clients) {
         this.id = id;
         this.startTime = startTime;
@@ -65,7 +65,7 @@ public class Order {
         this.clients = clients;
     }
 
-    public Order(int id, LocalDateTime startTime, LocalDateTime endTime, String departurePoint, String arrivalPoint,
+    public Order(long id, LocalDateTime startTime, LocalDateTime endTime, String departurePoint, String arrivalPoint,
                  float price, Payload payload, Employee driver, Company company, Vehicle vehicle, Set<Client> clients, Set<Receipt> receipts) {
         this(id, startTime, endTime, departurePoint, arrivalPoint, price, payload, driver, company, vehicle, clients);
         this.receipts = receipts;
@@ -75,7 +75,7 @@ public class Order {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

@@ -14,6 +14,7 @@ public class OrderMapper {
         order.setPayload(orderDto.getPayload());
         order.setDriver(orderDto.getDriver());
         order.setCompany(orderDto.getCompany());
+        order.setVehicle(orderDto.getVehicle());
         order.setClients(orderDto.getClients());
         return order;
     }

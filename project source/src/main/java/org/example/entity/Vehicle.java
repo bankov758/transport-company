@@ -38,7 +38,7 @@ public class Vehicle {
     @Pattern(regexp = "^[A-Za-z]{2}\\d{4}[A-Za-z]{2}$", message = "Vehicle's registration number does not match the pattern!")
     private String registrationNumber;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(optional = false)
     private Company company;
 
     @OneToMany(mappedBy = "vehicle", fetch = FetchType.LAZY)
