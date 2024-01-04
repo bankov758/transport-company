@@ -1,5 +1,11 @@
 package org.example.service;
 
+import com.itextpdf.kernel.pdf.PdfDocument;
+import com.itextpdf.kernel.pdf.PdfWriter;
+import com.itextpdf.layout.Document;
+import com.itextpdf.layout.Style;
+import com.itextpdf.layout.element.Paragraph;
+import com.itextpdf.layout.properties.TextAlignment;
 import org.example.dao.ClientDao;
 import org.example.dao.OrderDao;
 import org.example.dao.ReceiptDao;
@@ -7,7 +13,9 @@ import org.example.entity.Client;
 import org.example.entity.Order;
 import org.example.entity.Receipt;
 
+import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class OrderService {

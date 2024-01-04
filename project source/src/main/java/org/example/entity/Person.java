@@ -102,9 +102,9 @@ public class Person {
 
     @Override
     public String toString() {
-        return "id=" + id +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", ssn='" + ssn + '\'';
+        return "id=" + id + "\n" +
+                ", firstName='" + firstName + '\'' + "\n" +
+                ", lastName='" + lastName + '\'' + "\n" +
+                ", ssn='" + ssn + '\'' + "\n"  ;
     }
 }
