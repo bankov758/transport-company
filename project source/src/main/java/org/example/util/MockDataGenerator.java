@@ -35,7 +35,7 @@ public class MockDataGenerator {
         receiptDao = new ReceiptDao();
     }
 
-    public void generate(){
+    public void generate() {
         createCompanies();
         createVehicles();
         createPayloads();
@@ -55,26 +55,26 @@ public class MockDataGenerator {
                 LocalDateTime.of(2023, 12, 29, 23, 0),
                 "Sofia",
                 "Atina",
-                1000,
+                100,
                 payloadDao.getPayloadByQualification("Bus"),
                 employeeDao.getEmployeeByQualification("Bus"),
                 companyDao.getByField("name", "DHL"),
-                vehicleDao.getById(1),
+                vehicleDao.getById(3),
                 new HashSet<>(Arrays.asList(clientDao.getByField("ssn", "1141164465")))
         ));
         orderDao.create(order);
         orderService.addClient(order, "Silvia");
         orderService.addClient(order, "Hristo");
         Order order1 = OrderMapper.dtoToObject(new CreateOrderDto(
-                LocalDateTime.of(2023, 12, 24, 23, 0),
-                LocalDateTime.of(2023, 12, 29, 23, 0),
+                LocalDateTime.of(2024, 1, 14, 10, 0),
+                LocalDateTime.of(2024, 1, 19, 23, 0),
                 "London",
                 "Amsterdam",
                 3000,
-                payloadDao.getPayloadByQualification("Flammable goods"),
-                employeeDao.getEmployeeByQualification("Flammable goods"),
-                companyDao.getByField("name", "DHL"),
-                vehicleDao.getById(1),
+                payloadDao.getPayloadByQualification("Double payload"),
+                employeeDao.getEmployeeByQualification("Double payload"),
+                companyDao.getByField("name", "Speedy"),
+                vehicleDao.getById(2),
                 new HashSet<>(Arrays.asList(clientDao.getByField("ssn", "1141164465")))
         ));
         orderDao.create(order1);
@@ -101,6 +101,21 @@ public class MockDataGenerator {
                 CapacityUnit.KILOGRAM,
                 700,
                 payloadQualificationDao.getByField("qualification", "Flammable goods"))));
+        payloadQualificationDao.create(PayloadMapper.dtoToObject(new CreatePayloadQualificationDto("Bus")));
+        payloadDao.create(PayloadMapper.dtoToObject(new CreatePayloadDto(
+                CapacityUnit.PERSON,
+                50,
+                payloadQualificationDao.getByField("qualification", "Bus"))));
+        payloadQualificationDao.create(PayloadMapper.dtoToObject(new CreatePayloadQualificationDto("Double payload")));
+        payloadDao.create(PayloadMapper.dtoToObject(new CreatePayloadDto(
+                CapacityUnit.POUND,
+                5000,
+                payloadQualificationDao.getByField("qualification", "Double payload"))));
+        payloadQualificationDao.create(PayloadMapper.dtoToObject(new CreatePayloadQualificationDto("Oil tanker")));
+        payloadDao.create(PayloadMapper.dtoToObject(new CreatePayloadDto(
+                CapacityUnit.LITER,
+                2000,
+                payloadQualificationDao.getByField("qualification", "Oil tanker"))));
     }
 
     private void createCompanies() {
@@ -115,12 +130,11 @@ public class MockDataGenerator {
                 "Bankov",
                 "0141864465",
                 2000,
-                companyDao.getByField("name", "DHL")
+                companyDao.getByField("name", "Speedy")
         ));
         employeeDao.create(employee);
         EmployeeService employeeService = new EmployeeService();
-        employeeService.addPayloadQualification(employee,"Flammable goods");
-
+        employeeService.addPayloadQualification(employee, "Flammable goods");
         Employee employee2 = PersonMapper.createDtoToObject(new CreateEmployeeDto(
                 "Martina",
                 "Georgieva",
@@ -129,27 +143,25 @@ public class MockDataGenerator {
                 companyDao.getByField("name", "DHL")
         ));
         employeeDao.create(employee2);
-        employeeService.addPayloadQualification(employee2,"Flammable goods");
-
+        employeeService.addPayloadQualification(employee2, "Bus");
         Employee employee3 = PersonMapper.createDtoToObject(new CreateEmployeeDto(
                 "Kristina",
                 "Marinova",
                 "0140164465",
                 1000,
-                companyDao.getByField("name", "Speedy")
+                companyDao.getByField("name", "DHL")
         ));
         employeeDao.create(employee3);
-        employeeService.addPayloadQualification(employee3,"Flammable goods");
-
+        employeeService.addPayloadQualification(employee3, "Oil tanker");
         Employee employee4 = PersonMapper.createDtoToObject(new CreateEmployeeDto(
                 "Ivailo",
                 "Dimitrov",
                 "0141164435",
                 3000,
-                companyDao.getByField("name", "Discordia")
+                companyDao.getByField("name", "Speedy")
         ));
-        employeeDao.create(employee4);;
-        employeeService.addPayloadQualification(employee4,"Flammable goods");
+        employeeDao.create(employee4);
+        employeeService.addPayloadQualification(employee4, "Double payload");
     }
 
     private void createClients() {
@@ -185,16 +197,16 @@ public class MockDataGenerator {
                         1000, "ov0112da",
                         companyDao.getByField("name", "DHL"))));
         vehicleDao.create(VehicleMapper.createDtoToObject(
-                new CreateVehicleDto("semi-truck", CapacityUnit.KILOGRAM,
-                        500, "ov0113da",
-                        companyDao.getByField("name", "DHL"))));
-        vehicleDao.create(VehicleMapper.createDtoToObject(
-                new CreateVehicleDto("bus", CapacityUnit.KILOGRAM,
-                        50, "ov0113da",
+                new CreateVehicleDto("double-truck", CapacityUnit.POUND,
+                        6000, "ov0113da",
                         companyDao.getByField("name", "Speedy"))));
         vehicleDao.create(VehicleMapper.createDtoToObject(
-                new CreateVehicleDto("semi-truck", CapacityUnit.KILOGRAM,
-                        800, "ov0113da",
+                new CreateVehicleDto("Bus", CapacityUnit.PERSON,
+                        50, "ov0114da",
+                        companyDao.getByField("name", "DHL"))));
+        vehicleDao.create(VehicleMapper.createDtoToObject(
+                new CreateVehicleDto("tanker-truck", CapacityUnit.LITER,
+                        3000, "ov0115da",
                         companyDao.getByField("name", "Discordia"))));
     }
 

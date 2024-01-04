@@ -78,12 +78,12 @@ public class PayloadQualification {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof PayloadQualification that)) return false;
-        return id == that.id && Objects.equals(qualification, that.qualification);
+        return Objects.equals(qualification, that.qualification);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, qualification);
+        return Objects.hash(qualification);
     }
 
     @Override

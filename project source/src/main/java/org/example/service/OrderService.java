@@ -23,7 +23,7 @@ public class OrderService {
     }
 
     public void addClient(Order order, String name){
-        Client client = clientDao.getByField("name", name);
+        Client client = clientDao.getByField("firstName", name);
         addClient(order, client);
     }
 
@@ -35,7 +35,7 @@ public class OrderService {
     }
 
     public void pay(int orderId, String name) {
-        Client client = clientDao.getByField("name", name);
+        Client client = clientDao.getByField("firstName", name);
         Order order = orderDao.getById(orderId);
         pay(order, client);
     }
