@@ -35,6 +35,9 @@ public class MockDataGenerator {
         receiptDao = new ReceiptDao();
     }
 
+    /**
+     * Generates mock data also covers all requirements from 1 to 6 (without deletion)
+     */
     public void generate() {
         createCompanies();
         createVehicles();
@@ -45,7 +48,7 @@ public class MockDataGenerator {
 
         OrderService orderService = new OrderService();
         orderService.pay(1, "Silvia");
-        //orderService.pay(1, "Hristo");
+        orderService.pay(3, "Konstantin");
     }
 
     private void createOrders() {
@@ -80,10 +83,10 @@ public class MockDataGenerator {
         orderDao.create(order1);
         orderService.addClient(order1, "Konstantin");
         Order order2 = OrderMapper.dtoToObject(new CreateOrderDto(
-                LocalDateTime.of(2023, 12, 24, 23, 0),
-                LocalDateTime.of(2023, 12, 29, 23, 0),
-                "Sofia",
-                "Atina",
+                LocalDateTime.of(2024, 5, 2, 11, 0),
+                LocalDateTime.of(2024, 5, 3, 15, 0),
+                "Burgas",
+                "Pleven",
                 1000,
                 payloadDao.getPayloadByQualification("Flammable goods"),
                 employeeDao.getEmployeeByQualification("Flammable goods"),
@@ -122,6 +125,7 @@ public class MockDataGenerator {
         companyDao.create(CompanyMapper.dtoToObject(new CompanyDto("DHL")));
         companyDao.create(CompanyMapper.dtoToObject(new CompanyDto("Speedy")));
         companyDao.create(CompanyMapper.dtoToObject(new CompanyDto("Discordia")));
+        companyDao.create(CompanyMapper.dtoToObject(new CompanyDto("Econt")));
     }
 
     private void createEmployees() {
@@ -153,6 +157,7 @@ public class MockDataGenerator {
         ));
         employeeDao.create(employee3);
         employeeService.addPayloadQualification(employee3, "Oil tanker");
+
         Employee employee4 = PersonMapper.createDtoToObject(new CreateEmployeeDto(
                 "Ivailo",
                 "Dimitrov",
@@ -162,6 +167,16 @@ public class MockDataGenerator {
         ));
         employeeDao.create(employee4);
         employeeService.addPayloadQualification(employee4, "Double payload");
+
+        Employee employee5 = PersonMapper.createDtoToObject(new CreateEmployeeDto(
+                "Petya",
+                "Ivanova",
+                "0141164439",
+                3500,
+                companyDao.getByField("name", "Speedy")
+        ));
+        employeeDao.create(employee5);
+        employeeService.addPayloadQualification(employee5, "Double payload");
     }
 
     private void createClients() {

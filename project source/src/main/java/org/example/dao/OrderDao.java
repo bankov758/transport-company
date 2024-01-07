@@ -1,12 +1,17 @@
 package org.example.dao;
 
 import org.example.configuration.HibernateConfig;
+import org.example.entity.Company;
 import org.example.entity.Order;
 import org.example.entity.PayloadQualification;
 import org.example.entity.Receipt;
+import org.example.entity.enumeration.OrderBy;
 import org.example.exception.InvalidBusinessData;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+
+import java.util.List;
+import java.util.Optional;
 
 public class OrderDao extends AbstractDao<Order> {
 
@@ -74,17 +79,17 @@ public class OrderDao extends AbstractDao<Order> {
         return employees;
     }
 
-    public Long getNumberOfOrdersForCompany(String name) {
+    public Long getNumberOfOrdersForCompany(String companyName) {
         Long numOfOrders;
         try (Session session = HibernateConfig.getSessionFactory().openSession()) {
             Transaction transaction = session.beginTransaction();
             numOfOrders = session.createQuery(
                             " select count(*) from Order o " +
                                     " join o.company c " +
-                                    " where c.name = :name " +
+                                    " where c.name = :companyName " +
                                     " and o.endTime <= current timestamp ",
                             Long.class)
-                    .setParameter("name", name)
+                    .setParameter("companyName", companyName)
                     .getSingleResult();
             transaction.commit();
         }
@@ -94,7 +99,7 @@ public class OrderDao extends AbstractDao<Order> {
     /**
      * Get the income of (already paid and finished) orders for a given company
      */
-    public Double getIncomeFromOrdersForCompany(String name) {
+    public Double getIncomeFromOrdersForCompany(String companyName) {
         Double numOfOrders;
         try (Session session = HibernateConfig.getSessionFactory().openSession()) {
             Transaction transaction = session.beginTransaction();
@@ -102,14 +107,28 @@ public class OrderDao extends AbstractDao<Order> {
                             " select sum(o.price) from Order o " +
                                     " join o.company c " +
                                     " join o.receipts r " +
-                                    " where c.name = :name " +
+                                    " where c.name = :companyName " +
                                     " and o.endTime <= current timestamp ",
                             Double.class)
-                    .setParameter("name", name)
+                    .setParameter("companyName", companyName)
                     .getSingleResult();
             transaction.commit();
         }
         return numOfOrders;
+    }
+
+    public List<Order> filterByDestination(String destination) {
+        List<Order> orders;
+        try (Session session = HibernateConfig.getSessionFactory().openSession()) {
+            Transaction transaction = session.beginTransaction();
+            orders = session.createQuery("select c from Order c" +
+                                    " where c.arrivalPoint = :destination"
+                            , Order.class)
+                    .setParameter("destination", destination)
+                    .getResultList();
+            transaction.commit();
+        }
+        return orders;
     }
 
 }

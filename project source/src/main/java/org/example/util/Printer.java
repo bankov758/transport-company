@@ -10,6 +10,7 @@ import org.example.entity.Order;
 
 import java.io.IOException;
 import java.time.format.DateTimeFormatter;
+import java.util.Collections;
 import java.util.List;
 
 public class Printer {
@@ -19,10 +20,24 @@ public class Printer {
     private static final String PRINTED_SUCCESSFULLY = "PDF created successfully at: " + FILE_PATH;
 
     public static <T> void printEntity(T entity) {
+        printEntity(null, entity, null);
+    }
+
+    public static <T> void printEntities(List<T> entities) {
+        printEntities(null, entities, null);
+    }
+
+    public static <T> void printEntity(String textBefore, T entity, String textAfter) {
         try (PdfWriter writer = new PdfWriter(FILE_PATH)) {
             try (PdfDocument pdf = new PdfDocument(writer)) {
                 try (Document document = new Document(pdf)) {
+                    if (textBefore != null && !textBefore.isEmpty()) {
+                        document.add(new Paragraph(textBefore));
+                    }
                     addEntityToDoc(entity, document);
+                    if (textAfter != null && !textAfter.isEmpty()) {
+                        document.add(new Paragraph(textAfter));
+                    }
                 }
             }
             System.out.println(PRINTED_SUCCESSFULLY);
@@ -31,18 +46,26 @@ public class Printer {
         }
     }
 
-    public static <T> void printEntities(List<T> entities) {
-        try (PdfWriter writer = new PdfWriter(FILE_PATH)) {
-            try (PdfDocument pdf = new PdfDocument(writer)) {
-                try (Document document = new Document(pdf)) {
-                    for (T entity : entities) {
-                        addEntityToDoc(entity, document);
+    public static <T> void printEntities(String textBefore, List<T> entities, String textAfter) {
+        if (entities != null && !entities.isEmpty()) {
+            try (PdfWriter writer = new PdfWriter(FILE_PATH)) {
+                try (PdfDocument pdf = new PdfDocument(writer)) {
+                    try (Document document = new Document(pdf)) {
+                        if (textBefore != null && !textBefore.isEmpty()) {
+                            document.add(new Paragraph(textBefore));
+                        }
+                        for (T entity : entities) {
+                            addEntityToDoc(entity, document);
+                        }
+                        if (textAfter != null && !textAfter.isEmpty()) {
+                            document.add(new Paragraph(textAfter));
+                        }
                     }
                 }
+                System.out.println(PRINTED_SUCCESSFULLY);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
-            System.out.println(PRINTED_SUCCESSFULLY);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
         }
     }
 

@@ -56,12 +56,12 @@ public class Receipt {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Receipt receipt)) return false;
-        return id == receipt.id && Objects.equals(client, receipt.client) && Objects.equals(order, receipt.order);
+        return Objects.equals(client, receipt.client) && Objects.equals(order, receipt.order);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, client, order);
+        return Objects.hash(client, order);
     }
 
     @Override

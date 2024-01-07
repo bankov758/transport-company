@@ -54,16 +54,16 @@ public class CompanyDao extends AbstractDao<Company> {
         return vehicles;
     }
 
-    public List<Company> filterByName(String name, boolean isDesc) {
+    public List<Company> filterByName(String name, Optional<OrderBy> sort) {
         List<Company> companies;
         try (Session session = HibernateConfig.getSessionFactory().openSession()) {
             Transaction transaction = session.beginTransaction();
-            String orderBy = isDesc ? " desc " : " asc ";
-            companies = session.createQuery(
-                            "select c from Company c" +
-                                    " where c.name = :name " +
-                                    " order by name " + orderBy,
-                            Company.class)
+            StringBuilder queryString = new StringBuilder("select c from Company c" +
+                    " where c.name like concat('%', :name, '%') ");
+            sort.ifPresent(value -> {
+                queryString.append(" order by name ").append(value);
+            });
+            companies = session.createQuery(queryString.toString(), Company.class)
                     .setParameter("name", name)
                     .getResultList();
             transaction.commit();
@@ -77,8 +77,8 @@ public class CompanyDao extends AbstractDao<Company> {
             Transaction transaction = session.beginTransaction();
             StringBuilder queryString = new StringBuilder(" SELECT company.name AS name, SUM(price) AS income " +
                     " FROM company " +
-                    " inner join transport_company.transport_order on company.id = transport_order.company_id " +
-                    " inner join transport_company.receipt on receipt.order_id = transport_order.id " +
+                    " join transport_company.transport_order on company.id = transport_order.company_id " +
+                    " join transport_company.receipt on receipt.order_id = transport_order.id " +
                     " GROUP BY company.name ");
             queryString.append(" having income ").append(comparisonOperator.getSymbol()).append(income);
             sort.ifPresent(value -> {

@@ -90,9 +90,9 @@ public class EmployeeDao extends AbstractDao<Employee> {
         try (Session session = HibernateConfig.getSessionFactory().openSession()) {
             Transaction transaction = session.beginTransaction();
             employees = session.createQuery(
-                            " select new org.example.dto.EmployeeDto(e.id, e.firstName, e.lastName, count(*)) " +
+                            " select new org.example.dto.EmployeeDto(e.id, e.firstName, e.lastName, count(o.id)) " +
                                     " from Employee e " +
-                                    " join e.orders o " +
+                                    " left join e.orders o " +
                                     " group by e.id ",
                             EmployeeDto.class)
                     .getResultList();

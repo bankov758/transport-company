@@ -1,6 +1,7 @@
 package org.example.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import org.example.entity.enumeration.CapacityUnit;
@@ -30,11 +31,6 @@ public class Vehicle {
     private float capacity;
 
     @Column(name = "registration_number")
-    @Size(
-            min = REG_NUM_LENGTH,
-            max = REG_NUM_LENGTH,
-            message = "A vehicle's registration number has to be " + REG_NUM_LENGTH + " characters!"
-    )
     @Pattern(regexp = "^[A-Za-z]{2}\\d{4}[A-Za-z]{2}$", message = "Vehicle's registration number does not match the pattern!")
     private String registrationNumber;
 

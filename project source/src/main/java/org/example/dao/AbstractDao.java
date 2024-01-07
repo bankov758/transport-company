@@ -19,14 +19,6 @@ public abstract class AbstractDao<T> implements CrudDao<T> {
         this.clazz = clazz;
     }
 
-    public void create(T entity) {
-        try (Session session = HibernateConfig.getSessionFactory().openSession()) {
-            Transaction transaction = session.beginTransaction();
-            session.save(entity);
-            transaction.commit();
-        }
-    }
-
     public T getById(long id) {
         T entity;
         try (Session session = HibernateConfig.getSessionFactory().openSession()) {
@@ -63,10 +55,18 @@ public abstract class AbstractDao<T> implements CrudDao<T> {
         }
     }
 
+    public void create(T entity) {
+        try (Session session = HibernateConfig.getSessionFactory().openSession()) {
+            Transaction transaction = session.beginTransaction();
+            session.persist(entity);
+            transaction.commit();
+        }
+    }
+
     public void update(T entity) {
         try (Session session = HibernateConfig.getSessionFactory().openSession()) {
             Transaction transaction = session.beginTransaction();
-            session.update(entity);
+            session.merge(entity);
             transaction.commit();
         }
     }
@@ -74,7 +74,7 @@ public abstract class AbstractDao<T> implements CrudDao<T> {
     public void delete(T entity) {
         try (Session session = HibernateConfig.getSessionFactory().openSession()) {
             Transaction transaction = session.beginTransaction();
-            session.delete(entity);
+            session.remove(entity);
             transaction.commit();
         }
     }
