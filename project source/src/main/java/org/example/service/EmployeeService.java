@@ -1,19 +1,10 @@
 package org.example.service;
 
-import com.itextpdf.kernel.pdf.PdfDocument;
-import com.itextpdf.kernel.pdf.PdfWriter;
-import com.itextpdf.layout.Document;
-import com.itextpdf.layout.element.Paragraph;
-import com.itextpdf.layout.properties.TextAlignment;
 import org.example.dao.EmployeeDao;
-import org.example.dao.OrderDao;
 import org.example.dao.PayloadQualificationDao;
-import org.example.entity.Client;
 import org.example.entity.Employee;
-import org.example.entity.Order;
 import org.example.entity.PayloadQualification;
 
-import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -27,6 +18,12 @@ public class EmployeeService {
         payloadQualificationDao = new PayloadQualificationDao();
     }
 
+    /**
+     * Adds a payload qualification to an employees.
+     *
+     * @param employee      The employee to which the qualification will be added.
+     * @param qualification The qualification to be added to the employee's payload qualifications.
+     */
     public void addPayloadQualification(Employee employee, String qualification){
         PayloadQualification payloadQualification =
                 payloadQualificationDao.getByField("qualification", qualification);

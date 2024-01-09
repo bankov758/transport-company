@@ -10,25 +10,46 @@ import org.example.entity.Order;
 
 import java.io.IOException;
 import java.time.format.DateTimeFormatter;
-import java.util.Collections;
 import java.util.List;
 
 public class Printer {
 
-    private static final String FILE_PATH = "E:\\Projects\\transport_company\\project source\\src\\main\\resources\\example.pdf";
+    private static int fileCounter = 0;
+
+    private static final String FILE_PATH = "E:\\Projects\\transport_company\\project source\\src\\main\\resources\\example";
+
+    private static final String FILE_EXT = ".pdf";
 
     private static final String PRINTED_SUCCESSFULLY = "PDF created successfully at: " + FILE_PATH;
 
+    /**
+     * Prints an entity to a PDF document.
+     *
+     * @param entity     The entity to be added to the document.
+     */
     public static <T> void printEntity(T entity) {
         printEntity(null, entity, null);
     }
 
+    /**
+     * Prints a list of entities to a PDF document.
+     *
+     * @param entities   The list of entities to be printed.
+     */
     public static <T> void printEntities(List<T> entities) {
         printEntities(null, entities, null);
     }
 
+    /**
+     * Prints an entity to a PDF document.
+     *
+     * @param textBefore Text to be added to the document before the entity. Can be null or empty.
+     * @param entity     The entity to be added to the document.
+     * @param textAfter  Text to be added to the document after the entity. Can be null or empty.
+     */
     public static <T> void printEntity(String textBefore, T entity, String textAfter) {
-        try (PdfWriter writer = new PdfWriter(FILE_PATH)) {
+        fileCounter++;
+        try (PdfWriter writer = new PdfWriter(FILE_PATH + fileCounter + FILE_EXT)) {
             try (PdfDocument pdf = new PdfDocument(writer)) {
                 try (Document document = new Document(pdf)) {
                     if (textBefore != null && !textBefore.isEmpty()) {
@@ -46,9 +67,17 @@ public class Printer {
         }
     }
 
+    /**
+     * Prints a list of entities to a PDF document.
+     *
+     * @param textBefore The text to be added before the entities in the document. Can be null or empty.
+     * @param entities   The list of entities to be printed.
+     * @param textAfter  The text to be added after the entities in the document. Can be null or empty.
+     */
     public static <T> void printEntities(String textBefore, List<T> entities, String textAfter) {
+        fileCounter++;
         if (entities != null && !entities.isEmpty()) {
-            try (PdfWriter writer = new PdfWriter(FILE_PATH)) {
+            try (PdfWriter writer = new PdfWriter(FILE_PATH + fileCounter + FILE_EXT)) {
                 try (PdfDocument pdf = new PdfDocument(writer)) {
                     try (Document document = new Document(pdf)) {
                         if (textBefore != null && !textBefore.isEmpty()) {
@@ -69,17 +98,14 @@ public class Printer {
         }
     }
 
-    private static <T> void addEntityToDoc(T entity, Document document) {
-        document.add(new Paragraph(entity.toString()
-                .replace("{", "{ \n")
-                .replace("'", "")
-                .replace(",", "")
-                .replace("=", ": ")
-        ));
-    }
-
+    /**
+     * Prints a list of Orders to a PDF document.
+     *
+     * @param orders The list of Order objects to be printed.
+     */
     public static void printOrders(List<Order> orders) {
-        try (PdfWriter writer = new PdfWriter(FILE_PATH)) {
+        fileCounter++;
+        try (PdfWriter writer = new PdfWriter(FILE_PATH + fileCounter + FILE_EXT)) {
             try (PdfDocument pdf = new PdfDocument(writer)) {
                 try (Document document = new Document(pdf)) {
                     for (Order order : orders) {
@@ -109,6 +135,15 @@ public class Printer {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private static <T> void addEntityToDoc(T entity, Document document) {
+        document.add(new Paragraph(entity.toString()
+                .replace("{", "{ \n")
+                .replace("'", "")
+                .replace(",", "")
+                .replace("=", ": ")
+        ));
     }
 
 }

@@ -11,6 +11,12 @@ public class PayloadDao extends AbstractDao<Payload>{
         super(Payload.class);
     }
 
+    /**
+     * Retrieves a payload with a specified qualification.
+     *
+     * @param qualification The qualification to filter payloads by.
+     * @return The payload with the specified qualification.
+     */
     public Payload getPayloadByQualification(String qualification) {
         Payload payload;
         try (Session session = HibernateConfig.getSessionFactory().openSession()) {

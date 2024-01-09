@@ -1,17 +1,14 @@
 package org.example.dao;
 
 import org.example.configuration.HibernateConfig;
-import org.example.entity.Company;
 import org.example.entity.Order;
 import org.example.entity.PayloadQualification;
 import org.example.entity.Receipt;
-import org.example.entity.enumeration.OrderBy;
 import org.example.exception.InvalidBusinessData;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import java.util.List;
-import java.util.Optional;
 
 public class OrderDao extends AbstractDao<Order> {
 
@@ -45,6 +42,12 @@ public class OrderDao extends AbstractDao<Order> {
         }
     }
 
+    /**
+     * Retrieves the number of clients for a specified order.
+     *
+     * @param orderId The id of the order to count clients for.
+     * @return The number of clients for the specified order.
+     */
     public long getNumberOfOrderClients(int orderId) {
         long employees;
         try (Session session = HibernateConfig.getSessionFactory().openSession()) {
@@ -62,6 +65,12 @@ public class OrderDao extends AbstractDao<Order> {
         return employees;
     }
 
+    /**
+     * Retrieves the number of receipts for a specific order.
+     *
+     * @param orderId The id of the order to count receipts for.
+     * @return The number of receipts for the specified order.
+     */
     public long getNumberOfOrderReceipts(int orderId) {
         long employees;
         try (Session session = HibernateConfig.getSessionFactory().openSession()) {
@@ -79,7 +88,13 @@ public class OrderDao extends AbstractDao<Order> {
         return employees;
     }
 
-    public Long getNumberOfOrdersForCompany(String companyName) {
+    /**
+     * Retrieves the number of finished orders for a specific company.
+     *
+     * @param companyName The name of the company to count finished orders for.
+     * @return The number of finished orders for the specified company.
+     */
+    public Long getNumberOfFinishedOrdersForCompany(String companyName) {
         Long numOfOrders;
         try (Session session = HibernateConfig.getSessionFactory().openSession()) {
             Transaction transaction = session.beginTransaction();
@@ -97,7 +112,10 @@ public class OrderDao extends AbstractDao<Order> {
     }
 
     /**
-     * Get the income of (already paid and finished) orders for a given company
+     * Retrieves the total income from already paid and finished orders for a specific company.
+     *
+     * @param companyName The name of the company to calculate income for.
+     * @return The total income from already paid and finished orders for the specified company.
      */
     public Double getIncomeFromOrdersForCompany(String companyName) {
         Double numOfOrders;
@@ -117,6 +135,12 @@ public class OrderDao extends AbstractDao<Order> {
         return numOfOrders;
     }
 
+    /**
+     * Retrieves a list of orders filtered by destination.
+     *
+     * @param destination The destination to filter orders by.
+     * @return A list of orders.
+     */
     public List<Order> filterByDestination(String destination) {
         List<Order> orders;
         try (Session session = HibernateConfig.getSessionFactory().openSession()) {

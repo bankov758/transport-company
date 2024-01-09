@@ -17,6 +17,12 @@ public class ClientDao extends AbstractDao<Client>{
         super.create(entity);
     }
 
+    @Override
+    public void update(Client entity) {
+        checkIfClientExists(entity);
+        super.update(entity);
+    }
+
     private void checkIfClientExists(Client entity) {
         try (Session session = HibernateConfig.getSessionFactory().openSession()) {
             Transaction transaction = session.beginTransaction();

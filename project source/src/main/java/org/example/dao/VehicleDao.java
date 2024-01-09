@@ -12,6 +12,12 @@ public class VehicleDao extends AbstractDao<Vehicle>{
         super(Vehicle.class);
     }
 
+    /**
+     * Retrieves a suitable vehicle for a given order based on payload capacity and company compatibility.
+     *
+     * @param order The order for which a suitable vehicle is requested.
+     * @return The suitable Vehicle for the specified order.
+     */
     public Vehicle getSuitableForOrder(Order order){
         Vehicle vehicle;
         try (Session session = HibernateConfig.getSessionFactory().openSession()) {

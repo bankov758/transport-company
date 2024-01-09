@@ -21,6 +21,12 @@ public class CompanyDao extends AbstractDao<Company> {
         super(Company.class);
     }
 
+    /**
+     * Retrieves a list of employees from a specified company.
+     *
+     * @param companyName The name of the company whose employees are requested.
+     * @return A list of employees from a specified company.
+     */
     public List<EmployeeDto> getCompanyEmployeesDTO(String companyName) {
         List<EmployeeDto> employees;
         try (Session session =  HibernateConfig.getSessionFactory().openSession()) {
@@ -38,6 +44,12 @@ public class CompanyDao extends AbstractDao<Company> {
         return employees;
     }
 
+    /**
+     * Retrieves a list of vehicles of a specified company.
+     *
+     * @param companyName The name of the company for which vehicle information is requested.
+     * @return A List of vehicles.
+     */
     public List<VehicleDto> getCompanyVehiclesDTO(String companyName) {
         List<VehicleDto> vehicles;
         try (Session session =  HibernateConfig.getSessionFactory().openSession()) {
@@ -54,31 +66,46 @@ public class CompanyDao extends AbstractDao<Company> {
         return vehicles;
     }
 
-    public List<Company> filterByName(String name, Optional<OrderBy> sort) {
+    /**
+     * Filters companies by companyName and provides an optional sorting order.
+     *
+     * @param companyName  The companyName to filter companies by.
+     * @param sort  Optional sorting order for the result. If not provided, the result is not sorted.
+     * @return A list of companies.
+     */
+    public List<Company> filterByName(String companyName, Optional<OrderBy> sort) {
         List<Company> companies;
         try (Session session = HibernateConfig.getSessionFactory().openSession()) {
             Transaction transaction = session.beginTransaction();
             StringBuilder queryString = new StringBuilder("select c from Company c" +
-                    " where c.name like concat('%', :name, '%') ");
+                    " where c.companyName like concat('%', :companyName, '%') ");
             sort.ifPresent(value -> {
-                queryString.append(" order by name ").append(value);
+                queryString.append(" order by companyName ").append(value);
             });
             companies = session.createQuery(queryString.toString(), Company.class)
-                    .setParameter("name", name)
+                    .setParameter("name", companyName)
                     .getResultList();
             transaction.commit();
         }
         return companies;
     }
 
+    /**
+     * Filters companies by income and provides an optional sorting order.
+     *
+     * @param income               The income to filter companies by.
+     * @param comparisonOperator   The comparison operator for filtering.
+     * @param sort                 Optional sorting order for the result. If not provided, the result is not sorted.
+     * @return A List of CompanyDtos.
+     */
     public List<CompanyDto> filterByIncome(Float income, QueryOperator comparisonOperator, Optional<OrderBy> sort) {
         List<CompanyDto> companies;
         try (Session session = HibernateConfig.getSessionFactory().openSession()) {
             Transaction transaction = session.beginTransaction();
-            StringBuilder queryString = new StringBuilder(" SELECT company.name AS name, SUM(price) AS income " +
+            StringBuilder queryString = new StringBuilder(" SELECT company.name AS name, SUM(coalesce(price, 0)) AS income " +
                     " FROM company " +
-                    " join transport_company.transport_order on company.id = transport_order.company_id " +
-                    " join transport_company.receipt on receipt.order_id = transport_order.id " +
+                    " left join transport_company.transport_order on company.id = transport_order.company_id " +
+                    " left join transport_company.receipt on receipt.order_id = transport_order.id " +
                     " GROUP BY company.name ");
             queryString.append(" having income ").append(comparisonOperator.getSymbol()).append(income);
             sort.ifPresent(value -> {
@@ -91,6 +118,14 @@ public class CompanyDao extends AbstractDao<Company> {
         return companies;
     }
 
+    /**
+     * Retrieves the total income of a company for a specified period.
+     *
+     * @param companyName  The name of the company.
+     * @param periodStart   The start of the period for calculating income.
+     * @param periodEnd     The end of the period for calculating income.
+     * @return The total income of the specified company for the given period.
+     */
     public Double getCompanyIncomeForPeriod(String companyName, LocalDateTime periodStart, LocalDateTime periodEnd) {
         Double income;
         try (Session session = HibernateConfig.getSessionFactory().openSession()) {
