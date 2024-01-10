@@ -63,10 +63,9 @@ public class MockDataGenerator {
                 employeeDao.getEmployeeByQualification("Bus"),
                 companyDao.getByField("name", "DHL"),
                 vehicleDao.getById(3),
-                new HashSet<>(Arrays.asList(clientDao.getByField("ssn", "1141164465")))
+                new HashSet<>(Arrays.asList(clientDao.getByField("firstName", "Silvia")))
         ));
         orderDao.create(order);
-        orderService.addClient(order, "Silvia");
         orderService.addClient(order, "Hristo");
         Order order1 = OrderMapper.dtoToObject(new CreateOrderDto(
                 LocalDateTime.of(2024, 1, 14, 10, 0),
@@ -78,10 +77,9 @@ public class MockDataGenerator {
                 employeeDao.getEmployeeByQualification("Double payload"),
                 companyDao.getByField("name", "Speedy"),
                 vehicleDao.getById(2),
-                new HashSet<>(Arrays.asList(clientDao.getByField("ssn", "1141164465")))
+                new HashSet<>(Arrays.asList(clientDao.getByField("firstName", "Konstantin")))
         ));
         orderDao.create(order1);
-        orderService.addClient(order1, "Konstantin");
         Order order2 = OrderMapper.dtoToObject(new CreateOrderDto(
                 LocalDateTime.of(2024, 5, 2, 11, 0),
                 LocalDateTime.of(2024, 5, 3, 15, 0),
@@ -92,10 +90,9 @@ public class MockDataGenerator {
                 employeeDao.getEmployeeByQualification("Flammable goods"),
                 companyDao.getByField("name", "DHL"),
                 vehicleDao.getById(1),
-                new HashSet<>(Arrays.asList(clientDao.getByField("ssn", "1141164465")))
+                new HashSet<>(Arrays.asList(clientDao.getByField("firstName", "Marian")))
         ));
         orderDao.create(order2);
-        orderService.addClient(order2, "Marian");
     }
 
     private void createPayloads() {

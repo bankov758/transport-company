@@ -138,6 +138,9 @@ public class Printer {
     }
 
     private static <T> void addEntityToDoc(T entity, Document document) {
+        if (entity == null){
+            return;
+        }
         document.add(new Paragraph(entity.toString()
                 .replace("{", "{ \n")
                 .replace("'", "")

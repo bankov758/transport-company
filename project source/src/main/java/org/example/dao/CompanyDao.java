@@ -78,12 +78,12 @@ public class CompanyDao extends AbstractDao<Company> {
         try (Session session = HibernateConfig.getSessionFactory().openSession()) {
             Transaction transaction = session.beginTransaction();
             StringBuilder queryString = new StringBuilder("select c from Company c" +
-                    " where c.companyName like concat('%', :companyName, '%') ");
+                    " where c.name like concat('%', :companyName, '%') ");
             sort.ifPresent(value -> {
-                queryString.append(" order by companyName ").append(value);
+                queryString.append(" order by name ").append(value);
             });
             companies = session.createQuery(queryString.toString(), Company.class)
-                    .setParameter("name", companyName)
+                    .setParameter("companyName", companyName)
                     .getResultList();
             transaction.commit();
         }
